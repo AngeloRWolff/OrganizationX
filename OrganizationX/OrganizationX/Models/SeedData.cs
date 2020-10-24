@@ -7,6 +7,6 @@ namespace OrganizationX.Models
 {
     public class SeedData
     {
-        public string SeedData { get; set; }
+        public string Seed { get; set; }
     }
 }

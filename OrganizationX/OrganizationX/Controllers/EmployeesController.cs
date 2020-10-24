@@ -29,7 +29,7 @@ namespace OrganizationX.Controllers
         // POST: SeedData
         // Analyzes Seed Data Against Employee Model
         [HttpPost]
-        public IActionResult Load([Bind("SeedData")] SeedData seed)
+        public IActionResult Load([Bind("SeedData")] SeedData seedData)
         {
             return null;
         }
