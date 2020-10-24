@@ -11,5 +11,4 @@ function openCsv(event) {
         textField.innerHTML = atob(data.split(',')[1]);
     };
     reader.readAsDataURL(input.files[0]);
-
 };

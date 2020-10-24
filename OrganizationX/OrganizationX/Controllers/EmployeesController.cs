@@ -34,9 +34,10 @@ namespace OrganizationX.Controllers
         // POST: SeedData
         // Analyzes Seed Data Against Employee Model
         [HttpPost]
-        public IActionResult Load([Bind("SeedData")] SeedData seedData)
+        public IActionResult Load([Bind("Seed")] SeedData seedData)
         {
-            return null;
+            Console.WriteLine(seedData.Seed);
+            return View();
         }
         // GET: Employees/Details/5
         public async Task<IActionResult> Details(uint? id)
