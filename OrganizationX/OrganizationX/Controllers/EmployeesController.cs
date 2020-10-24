@@ -25,6 +25,14 @@ namespace OrganizationX.Controllers
             return View(await _context.Employee.ToListAsync());
         }
 
+
+        // POST: SeedData
+        // Analyzes Seed Data Against Employee Model
+        [HttpPost]
+        public IActionResult Load([Bind("SeedData")] SeedData seed)
+        {
+            return null;
+        }
         // GET: Employees/Details/5
         public async Task<IActionResult> Details(uint? id)
         {
