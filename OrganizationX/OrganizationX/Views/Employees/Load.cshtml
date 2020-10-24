@@ -1,4 +1,4 @@
-﻿
+﻿@model OrganizationX.Models.SeedData
 @{
     ViewData["Title"] = "Load";
 }
@@ -6,3 +6,7 @@
 <h1>Load CSV Data</h1>
 <input type="file" accept=".csv" onchange="openCsv(event)" />
 
+<form asp-action="Load">
+<textarea asp-for="Seed" id="loadTextField"></textarea>
+    <input name="sumbitSeed" type="submit" value="Analyze Seed Data" />
+</form>
