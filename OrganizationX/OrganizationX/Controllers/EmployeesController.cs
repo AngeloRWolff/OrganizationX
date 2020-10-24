@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OrganizationX.Data;
+using OrganizationX.Helpers;
 using OrganizationX.Models;
 
 namespace OrganizationX.Controllers
@@ -37,6 +38,16 @@ namespace OrganizationX.Controllers
         public IActionResult Load([Bind("Seed")] SeedData seedData)
         {
             Console.WriteLine(seedData.Seed);
+            SeedMutator mutateSeed = new SeedMutator
+            {
+                SeedData = seedData.Seed,
+                Options = new SeedOptions
+                {
+                    Keyless = false,
+                    CsvDelimeter = ','
+                }
+            };
+
             return View();
         }
         // GET: Employees/Details/5
