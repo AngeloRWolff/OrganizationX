@@ -25,6 +25,11 @@ namespace OrganizationX.Controllers
             return View(await _context.Employee.ToListAsync());
         }
 
+        // GET: Load
+        public IActionResult Load()
+        {
+            return View();
+        }
 
         // POST: SeedData
         // Analyzes Seed Data Against Employee Model
