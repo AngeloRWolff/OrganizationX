@@ -182,3 +182,4 @@ C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\Employees\Index.cshtml.g.cs
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\Employees\Analytics.cshtml.g.cs
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\Employees\Load.cshtml.g.cs
+C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\Employees\Error.cshtml.g.cs
