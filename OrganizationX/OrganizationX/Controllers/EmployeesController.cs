@@ -37,17 +37,24 @@ namespace OrganizationX.Controllers
         [HttpPost]
         public IActionResult Load([Bind("Seed")] SeedData seedData)
         {
-            Console.WriteLine(seedData.Seed);
-            SeedMutator mutateSeed = new SeedMutator
+            SeedMutator mutatedSeed = new SeedMutator
             {
                 SeedData = seedData.Seed,
                 Options = new SeedOptions
                 {
-                    Keyless = false,
+                    HasKeys = true,
                     CsvDelimeter = ','
                 }
             };
-
+            SeedDataProperties seedDataProperties = new SeedDataProperties
+            {
+                Employees = mutatedSeed.GetEmployees(),
+                Conflicts = null,
+                MissingKeys = null,
+                TotalRecords = mutatedSeed.Size
+            };
+            Console.WriteLine(seedDataProperties.Employees.Count);
+            Console.WriteLine(seedDataProperties.TotalRecords);
             return View();
         }
         // GET: Employees/Details/5
