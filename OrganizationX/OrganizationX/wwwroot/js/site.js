@@ -12,3 +12,4 @@ function openCsv(event) {
     };
     reader.readAsDataURL(input.files[0]);
 };
+

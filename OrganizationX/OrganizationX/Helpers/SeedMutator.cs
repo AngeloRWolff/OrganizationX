@@ -14,9 +14,9 @@ namespace OrganizationX.Helpers
         public int Size { get; set; } = 0;
 
         // Mutates Employee Seed Data Into Queue Type Of Employee Model
-        public Queue<Employee> GetEmployees()
+        public List<Employee> GetEmployees()
         {
-            Queue<Employee> newEmployees = new Queue<Employee>();
+            List<Employee> newEmployees = new List<Employee>();
             CharMapper charMap = new CharMapper();
             foreach (char character in SeedData)
             {
@@ -24,12 +24,12 @@ namespace OrganizationX.Helpers
                 {
                     if (Options.HasKeys == true && Size > 0)
                     {
-                        newEmployees.Enqueue(Bind(charMap.Row));
+                        newEmployees.Add(Bind(charMap.Row));
                     }
                     else
                     if (Options.HasKeys == false)
                     {
-                        newEmployees.Enqueue(Bind(charMap.Row));
+                        newEmployees.Add(Bind(charMap.Row));
                     }
                     Size++;
 
@@ -37,7 +37,7 @@ namespace OrganizationX.Helpers
                 }
                 charMap.Append(character);
             }
-
+            
             return newEmployees;
         }
 

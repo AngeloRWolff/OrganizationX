@@ -35,7 +35,7 @@ namespace OrganizationX.Controllers
         // POST: SeedData
         // Analyzes Seed Data Against Employee Model
         [HttpPost]
-        public IActionResult Load([Bind("Seed")] SeedData seedData)
+        public async Task<IActionResult> Load([Bind("Seed")] SeedData seedData)
         {
             SeedMutator mutatedSeed = new SeedMutator
             {
@@ -48,16 +48,42 @@ namespace OrganizationX.Controllers
             };
             SeedDataProperties seedDataProperties = new SeedDataProperties
             {
-                Employees = mutatedSeed.GetEmployees(),
+                EmployeeQueue = mutatedSeed.GetEmployees(),
                 Conflicts = null,
                 MissingKeys = null,
                 TotalRecords = mutatedSeed.Size,
                 Keys = mutatedSeed.getKeys()
             };
-            Console.WriteLine(seedDataProperties.Employees.Count);
-            Console.WriteLine(seedDataProperties.TotalRecords);
-            return View("ConfirmSeed",seedDataProperties);
+
+            foreach(Employee employee in seedDataProperties.EmployeeQueue)
+            {
+                _context.Add(employee);
+            }
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
+
+        // POST: Employee Seed
+        [HttpPost]
+        public IActionResult SubmitSeed([Bind("Employees,Keys,TotalRecords,MissingKeys,Conflicts")] SeedDataProperties sdp)
+        {
+            Console.WriteLine(sdp.TotalRecords);
+            int x = 0;
+            foreach(Employee employee in sdp.EmployeeQueue)
+            {
+                x++;
+            }
+            Console.WriteLine("HHH" + x);
+
+
+
+
+            return RedirectToAction(nameof(Index));
+        }
+            
+            
+
         // GET: Employees/Details/5
         public async Task<IActionResult> Details(uint? id)
         {

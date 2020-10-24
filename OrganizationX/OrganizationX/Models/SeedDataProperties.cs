@@ -7,7 +7,8 @@ namespace OrganizationX.Models
 {
     public class SeedDataProperties
     {
-        public Queue<Employee> Employees { get; set; }
+        //"Employees,Keys,TotalRecords,MissingKeys,Conflicts"
+        public List<Employee> EmployeeQueue { get; set; }
         public List<Key> Keys { get; set; }
         public int TotalRecords { get; set; }
 

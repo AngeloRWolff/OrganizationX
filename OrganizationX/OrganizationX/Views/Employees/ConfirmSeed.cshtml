@@ -3,15 +3,20 @@
     ViewData["Title"] = "ConfirmSeed";
 }
 
+@Model.EmployeeQueue.Count
 <h1>ConfirmSeed</h1>
 
+@using (Html.BeginForm("SubmitSeed", "Employees", Model, FormMethod.Post))
+{
+    <button>Submit</button>
+}
+
 <font size="2">
-    <table >
+    <table>
         <thead>
         </thead>
-
         <tbody>
-            @foreach (var item in Model.Employees)
+            @foreach (var item in Model.EmployeeQueue)
             {
                 <tr>
                     <td>
@@ -121,3 +126,5 @@
         </tbody>
     </table>
 </font>
+
+@Model.EmployeeQueue.Count
