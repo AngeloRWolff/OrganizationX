@@ -8,7 +8,7 @@ namespace OrganizationX.Models
     public class SeedDataProperties
     {
         public Queue<Employee> Employees { get; set; }
-      
+        public List<Key> Keys { get; set; }
         public int TotalRecords { get; set; }
 
         //Psuedo - In process

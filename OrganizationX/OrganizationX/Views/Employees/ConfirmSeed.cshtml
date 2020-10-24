@@ -1,7 +1,123 @@
-﻿
+﻿@model OrganizationX.Models.SeedDataProperties
 @{
     ViewData["Title"] = "ConfirmSeed";
 }
 
 <h1>ConfirmSeed</h1>
 
+<font size="2">
+    <table >
+        <thead>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.Employees)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Age)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Attrition)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BusinessTravel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DailyRate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DistanceFromHome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Education)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EducationField)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EnvironmentSatisfaction)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HourlyRate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobInvolvement)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobLevel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobRole)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobSatisfaction)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaritalStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MonthlyIncome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MonthlyRate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumCompaniesWorked)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Over18)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OverTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PercentSalaryHike)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PerformanceRating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RelationshipSatisfaction)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StandardHours)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StockOptionLevel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalWorkingYears)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrainingTimesLastYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkLifeBalance)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YearsAtCompany)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YearsInCurrentRole)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YearsSinceLastPromotion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YearsWithCurrManager)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</font>

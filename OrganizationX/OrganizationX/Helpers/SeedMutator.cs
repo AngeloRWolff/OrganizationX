@@ -61,6 +61,16 @@ namespace OrganizationX.Helpers
             return employee;
 
         }
+        public List<Key> getKeys()
+        {
+            List<Key> employeeKeys = new List<Key>();
+            PropertyInfo[] propertyInfo = typeof(Employee).GetProperties();
+            foreach (var property in propertyInfo)
+            {
+                employeeKeys.Add(new Key { KeyName = property.Name });
+            }
+            return employeeKeys;
+        }
     }
 
 

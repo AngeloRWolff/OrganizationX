@@ -12,6 +12,11 @@ a {
   color: #0366d6;
 }
 
+.small-table
+{
+    width:100%;
+    font-size: 8px;
+}
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

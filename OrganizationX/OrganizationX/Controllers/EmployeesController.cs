@@ -51,11 +51,12 @@ namespace OrganizationX.Controllers
                 Employees = mutatedSeed.GetEmployees(),
                 Conflicts = null,
                 MissingKeys = null,
-                TotalRecords = mutatedSeed.Size
+                TotalRecords = mutatedSeed.Size,
+                Keys = mutatedSeed.getKeys()
             };
             Console.WriteLine(seedDataProperties.Employees.Count);
             Console.WriteLine(seedDataProperties.TotalRecords);
-            return View();
+            return View("ConfirmSeed",seedDataProperties);
         }
         // GET: Employees/Details/5
         public async Task<IActionResult> Details(uint? id)
