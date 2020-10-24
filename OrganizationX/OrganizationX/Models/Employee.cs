@@ -35,6 +35,7 @@ namespace OrganizationX.Models
         [Required]
         public uint EmployeeCount { get; set; }
 
+        [Key]
         [Required]
         public uint EmployeeNumber { get; set; }
 

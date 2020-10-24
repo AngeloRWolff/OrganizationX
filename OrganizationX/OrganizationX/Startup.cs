@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,6 +34,9 @@ namespace OrganizationX
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddDbContext<EmployeeContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("EmployeeContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
