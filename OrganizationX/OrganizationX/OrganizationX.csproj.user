@@ -16,6 +16,7 @@
     <_SelectedScaffolderCategoryPath>root/Identity</_SelectedScaffolderCategoryPath>
     <ActiveDebugProfile>OrganizationX</ActiveDebugProfile>
     <WebStackScaffolding_LayoutPageFile />
+    <NameOfLastUsedPublishProfile>OrganizationX20201024110531 - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
