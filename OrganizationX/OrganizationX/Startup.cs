@@ -35,6 +35,8 @@ namespace OrganizationX
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+
+            //Connection String: Data Source=orgxdatabase.database.windows.net;Initial Catalog=OrgXDatabase;User ID=sysadmin;Password=xoSQL@DB;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
             services.AddDbContext<EmployeeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EmployeeContext")));
         }
