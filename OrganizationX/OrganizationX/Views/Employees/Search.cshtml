@@ -1,7 +1,19 @@
-﻿
+﻿@model OrganizationX.Models.SearchParameters
+
 @{
     ViewData["Title"] = "Search";
+    var keys = new Employee().GetType().GetProperties();
 }
+<div id="searchSelection">
 
-<h1>Search</h1>
+</div>
+@foreach(var key in keys)
+{  
+     <div class="search-bubble">@key.Name</div>
+}
+<form asp-action="Search">
+    <input asp-for="Id"/>
+    <input type="submit" value="search" />
+</form>
+
 

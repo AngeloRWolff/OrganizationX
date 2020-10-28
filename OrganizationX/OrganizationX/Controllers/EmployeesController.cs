@@ -32,6 +32,7 @@ namespace OrganizationX.Controllers
             return View();
         }
 
+
         // POST: SeedData
         // Analyzes Seed Data Against Employee Model
         [HttpPost]
@@ -192,6 +193,27 @@ namespace OrganizationX.Controllers
 
             return View(employee);
         }
+        [HttpGet]
+        public IActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Search(SearchParameters sp)
+        {
+            Console.WriteLine(sp.Id);
+            var employee = _context.Employee.Where(s => s.EmployeeNumber == sp.Id).ToList();
+
+            Console.WriteLine(employee.Count);
+            return View("SearchResults",employee);
+        }
+
+        public IActionResult SearchResults()
+        {
+            return View();
+        }
+
 
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]

@@ -223,3 +223,4 @@ C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Areas
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\Employees\ConfirmSeed.cshtml.g.cs
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\Employees\Search.cshtml.g.cs
+C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\Employees\SearchResults.cshtml.g.cs

@@ -13,3 +13,9 @@ function openCsv(event) {
     reader.readAsDataURL(input.files[0]);
 };
 
+function createSearchBubble(key) {
+    var searchBox = document.getElementById('searchSelection');
+    var selector = document.createElement('div');
+    selector.className = "search-bubble";
+    searchBox.appendChild(selector);
+}
