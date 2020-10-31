@@ -1,0 +1,252 @@
+﻿@model OrganizationX.Models.SearchParameters
+
+@{
+    ViewData["Title"] = "Search";
+    var keys = new Employee().GetType().GetProperties();
+    var ParentSearchOption = new SearchParameters().GetType().GetProperties();
+    var ChildSearchProperty = new Option().GetType().GetProperties();
+    var MinMaxProperty = new IntegerRange().GetType().GetProperties();
+
+    var g = new StaticEmployeeSourceList();
+    char index = 'z';
+}
+
+<div class="text-center">
+    <div id="searchSelection" class="search-right-pane">
+        @foreach (var key in keys)
+        {
+            @if (index != key.Name[0])
+            {
+                <div class="search-bubble-index">@key.Name[0]</div>
+                index = key.Name[0];
+            }
+            <div onclick="list(this)" ref-id="@key.Name" data-type="@key.PropertyType.Name" class="search-bubble">@key.Name</div>
+        }
+
+    </div>
+</div>
+
+<form asp-action="SearchSelection" class="box-container">
+
+    @foreach (var k in keys)
+    {
+        string optionType = $"{k.Name}.OptionType";
+
+
+
+        <div id="@k.Name" class="search-box-init">
+            <div class="search-header-container">
+                <div class="search-header-title">@k.Name</div>
+                <select class="search-header-select" reset="true" name="@optionType" align-text-right trim-top-left" onchange="changeForm(this.value,'@k.Name`option`')">
+                    @if (k.PropertyType.Name == "String")
+                    {
+                        <option class="text-center" value="" selected disabled hidden>select option</option>
+                        <option class="text-center" value="Exact">Exact</option>
+                    }
+                    else
+                    {
+                        <option class="text-center" value="None" selected disabled hidden>select option</option>
+                        <option class="text-center" value="Exact">Exact</option>
+                        <option class="text-center" value="Range">Range</option>
+                        <option class="text-center" value="Condition">Condition</option>
+                    }
+                </select>
+
+
+                <button class="float-right inline-block" type="button" onclick="deselect('@k.Name')">--X--</button>
+            </div>
+
+
+            <div class="inline-block text-center max-width" style="margin-top:15px;" id='@k.Name`option`'>
+
+                <button class="inline-block" type="button" onclick="clearF('@k.Name')">Clear</button>
+                @foreach (var i in ChildSearchProperty)
+                {
+                    switch (i.Name)
+                    {
+                        case "Exact":
+                            {
+
+                                <div style="display:none" group="Exact" id='@k.Name`Exact`'>
+                                    @{
+                                        List<String> list = g.GetList(k.Name);
+                                        String name = $"{k.Name}.{i.Name}";
+                                        String id = $"{k.Name}_{i.Name}";
+                                        if (list.Count > 0)
+                                        {
+                                            <div id="Age_Exact">
+                                                @foreach (string item in list)
+                                                {
+                                                    <div class="inline-block pad-right-small">
+                                                        <input name="@name" value="@item" type="checkbox" id="@id">
+                                                        <label>@item</label>
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div>Custom</div>
+                                            <input class="input-light width-med round-15" type="text" />
+                                        }
+                                        else
+                                        {
+                                            <div>Custom</div>
+                                            <input class="input-light width-med round-15" type="number" data-val="true" data-val-required="The Exact field is required." id="Age_Exact" name="@name" value="" />
+                                        }
+                                    }
+                                </div>
+                            }
+                            break;
+                        case "Range":
+                            {
+                                <div class="inline-block text-center max-width" style="display:none" group="Range" id='@k.Name`Range`'>
+                                    @foreach (var b in MinMaxProperty)
+                                    {
+                                        String name = $"{k.Name}.{i.Name}.{b.Name}";
+                                        String id = $"{k.Name}_{i.Name}_{b.Name}";
+                                        <div class="inline-block">
+                                            @b.Name
+                                            <input min="0" class="inline-block round-15 width-small input-light" type="number" data-val="true" data-val-required="The Exact field is required." id="Age_Exact" name="@name" value="" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            break;
+
+                        case "Relation":
+                            {
+                                string asciiName = $"{k.Name}.{i.Name}.Relation.AsciiCode";
+                                string iName = $"{k.Name}.{i.Name}.Value";
+                                <div style="display:none" group="Condition" id='@k.Name`Condition`'>
+                                    <select name="@asciiName">
+                                        @foreach (var relop in g.RelationOption)
+                                        {
+                                            <option>@relop.AsciiCode</option>
+                                        }
+                                    </select>
+                                    Value: <input class="input-light width-med round-15" name="@iName" />
+                                </div>
+                            }
+                            break;
+                    }
+                }
+
+            </div>
+        </div>
+    }
+    hello <input type="submit" />
+</form>
+
+
+
+@{
+    //  Console.WriteLine(k.Name);
+
+    //Console.WriteLine(i.Name);
+    //determine type
+
+    //determine id ==== Parent_Child
+    // String id = $"{k.Name}_{i.Name}";
+    //determine name ==== DONE
+    // String name = $"{k.Name}.{i.Name}";
+    // List<String>
+    //   list = g.GetList(k.Name);
+    //  if (list.Count > 0)
+    //  {
+    // <select id="Age_Exact" name="@name">
+    //     @foreach (string item in list)
+    //     {
+    //<option value=@item>@item</option>
+    //    }
+    // </select>
+    // }
+    //<input type="number" data-val="true" data-val-required="The Exact field is required." id="Age_Exact" name="@name" value="">
+
+    // }
+    //  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<form asp-action="Test">
+    <div id="refAge">
+
+        <input type="number" data-val="true" data-val-required="The Exact field is required." id="Age_Exact" name="Age.Exact" value="">
+    </div>
+
+    <input type="submit" />
+</form>
+
+<script>
+    function list(f) {
+        var targetId = f.getAttribute('ref-id')
+        var g = document.getElementById(targetId);
+
+        if (g.className === 'search-box-hidden' || g.className === 'search-box-init') {
+            g.className = "search-box";
+            f.className = 'search-bubble-selected'
+        }
+        else {
+            g.className = 'search-box-hidden';
+            f.className = 'search-bubble'
+            clearF(targetId);
+        }
+
+
+
+    }
+</script>
+
+
+
+
+@section scripts{
+    <script>
+        function changeForm(group, options) {
+            var g = document.getElementById(options).children;
+            for (var i = 0; i < g.length; i++) {
+                if (g[i].getAttribute('group') == group)
+                    g[i].style.display = 'block'
+                else
+                    g[i].style.display = 'none'
+            }
+        }
+
+        function clearF(id) {
+            var x = document.getElementById(id).querySelectorAll("input");
+            var g = document.getElementById(id).querySelectorAll("select");
+            for (var i = 0; i < x.length; i++) {
+                console.log(x[i].value = '');
+            }
+            for (var i = 0; i < g.length; i++) {
+                g[i].selectedIndex = 0;
+                g[i].dispatchEvent('onchange')
+
+            }
+
+        }
+
+        function deselect(id) {
+            console.log(id);
+            var k = document.getElementById('searchSelection').querySelectorAll('div');
+            for (var i = 0; i < k.length; i++) {
+                console.log(k[i]);
+                if (k[i].getAttribute('ref-id') === id) {
+                    k[i].click();
+                }
+            }
+        }
+
+    </script>
+}
+
+

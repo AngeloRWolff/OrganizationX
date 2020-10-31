@@ -6,6 +6,31 @@
     <title>@ViewData["Title"] - OrganizationX</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <style>
+        /* width */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #3a3a3a;
+            border-radius: 5px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #2e5f75;
+            border-radius: 5px;
+        }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #37728d;
+                border-radius: 5px;
+            }
+    </style>
 </head>
 <body>
     <header class="side-nav">
@@ -25,8 +50,9 @@
                         <li class="nav-button">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        
                         <li class="nav-button">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Employees" asp-action="Search">Privacy</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Employees" asp-action="SearchSelection">Search</a>
                         </li>
                     </ul>
                 </div>
@@ -41,8 +67,8 @@
             <partial name="_LoginPartial" />
         </nav>
     </nav>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div>
+        <main role="main">
             @RenderBody()
         </main>
     </div>

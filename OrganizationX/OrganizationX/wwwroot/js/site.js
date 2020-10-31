@@ -19,3 +19,4 @@ function createSearchBubble(key) {
     selector.className = "search-bubble";
     searchBox.appendChild(selector);
 }
+

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -194,21 +195,54 @@ namespace OrganizationX.Controllers
             return View(employee);
         }
         [HttpGet]
-        public IActionResult Search()
+        public IActionResult SearchSelection()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Search(SearchParameters sp)
+        public IActionResult SearchSelection(SearchParameters sp)
         {
-            Console.WriteLine(sp.Id);
-            var employee = _context.Employee.Where(s => s.EmployeeNumber == sp.Id).ToList();
 
-            Console.WriteLine(employee.Count);
-            return View("SearchResults",employee);
+            Console.WriteLine(sp.Age.Relation.Relation.AsciiCode);
+            Console.WriteLine(sp.Age.Relation.Value);
+
+            Console.WriteLine(sp.DailyRate.Relation.Relation.AsciiCode);
+            Console.WriteLine(sp.DailyRate.Relation.Value);
+
+
+            if (sp.Attrition != null)
+            {
+                
+                
+            }
+            IQueryable<Employee> employeeContext = _context.Employee;
+            
+            if (sp == null)
+            {
+
+            }
+            else
+            {
+                if(sp.Age != null) //Check if Age Exists
+                {
+                   employeeContext = employeeContext.Where("Age = 18");
+                }
+            }
+
+
+
+
+
+            return View("Index",employeeContext.ToList());
         }
 
+        [HttpPost]
+        public IActionResult Test(SearchParameters sp)
+        {
+            
+            return RedirectToAction(nameof(SearchSelection));
+        }
         public IActionResult SearchResults()
         {
             return View();
