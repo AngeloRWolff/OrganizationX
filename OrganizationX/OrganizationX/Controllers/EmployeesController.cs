@@ -197,6 +197,7 @@ namespace OrganizationX.Controllers
 
             return View(employee);
         }
+
         [HttpGet]
         public IActionResult SearchSelection()
         {
@@ -210,7 +211,7 @@ namespace OrganizationX.Controllers
             //Console.WriteLine(sp.Age.OptionType.ToString());
             // return RedirectToAction(nameof(SearchSelection));
 
-            return View("SearchSelection", sp);
+            
             Stopwatch bench = new Stopwatch();
             LinqDynamicQueryOptimizer LDQO = new LinqDynamicQueryOptimizer();
             bench.Start();
@@ -259,6 +260,12 @@ namespace OrganizationX.Controllers
             //  return RedirectToAction(nameof(SearchSelection));
 
             // return View("Index", employeeContext.ToList());
+        }
+
+        // GET: Analytics
+        public IActionResult Analytics()
+        {
+            return View();
         }
 
         [HttpPost]
