@@ -27,7 +27,7 @@ using OrganizationX.Models;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"1bbf22d15e77168afb752a22175e04be8fa31c3f", @"/Views/Employees/Delete.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"e9deab4325b1ad07f127b552ff648ad905e78086", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7aadd68e63806b8d98c6fab6f0a576c24b7f095a", @"/Views/_ViewImports.cshtml")]
     public class Views_Employees_Delete : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<OrganizationX.Models.Employee>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("type", "hidden", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
