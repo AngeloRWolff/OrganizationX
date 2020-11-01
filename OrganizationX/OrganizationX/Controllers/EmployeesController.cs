@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OrganizationX.Data;
 using OrganizationX.Helpers;
 using OrganizationX.Models;
@@ -57,7 +60,7 @@ namespace OrganizationX.Controllers
                 Keys = mutatedSeed.getKeys()
             };
 
-            foreach(Employee employee in seedDataProperties.EmployeeQueue)
+            foreach (Employee employee in seedDataProperties.EmployeeQueue)
             {
                 _context.Add(employee);
             }
@@ -72,7 +75,7 @@ namespace OrganizationX.Controllers
         {
             Console.WriteLine(sdp.TotalRecords);
             int x = 0;
-            foreach(Employee employee in sdp.EmployeeQueue)
+            foreach (Employee employee in sdp.EmployeeQueue)
             {
                 x++;
             }
@@ -83,8 +86,8 @@ namespace OrganizationX.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-            
-            
+
+
 
         // GET: Employees/Details/5
         public async Task<IActionResult> Details(uint? id)
@@ -204,43 +207,64 @@ namespace OrganizationX.Controllers
         public IActionResult SearchSelection(SearchParameters sp)
         {
 
-            Console.WriteLine(sp.Age.Relation.Relation.AsciiCode);
-            Console.WriteLine(sp.Age.Relation.Value);
+            //Console.WriteLine(sp.Age.OptionType.ToString());
+            // return RedirectToAction(nameof(SearchSelection));
 
-            Console.WriteLine(sp.DailyRate.Relation.Relation.AsciiCode);
-            Console.WriteLine(sp.DailyRate.Relation.Value);
+            return View("SearchSelection", sp);
+            Stopwatch bench = new Stopwatch();
+            LinqDynamicQueryOptimizer LDQO = new LinqDynamicQueryOptimizer();
+            bench.Start();
 
-
-            if (sp.Attrition != null)
+            foreach (PropertyInfo ppp in sp.GetType().GetProperties())
             {
-                
-                
-            }
-            IQueryable<Employee> employeeContext = _context.Employee;
-            
-            if (sp == null)
-            {
-
-            }
-            else
-            {
-                if(sp.Age != null) //Check if Age Exists
+                Option p = (Option)ppp.GetValue(sp);
+                if (p.OptionType != OptionType.None)
                 {
-                   employeeContext = employeeContext.Where("Age = 18");
+                    switch (p.OptionType)
+                    {
+                        case OptionType.ExactInt:
+                            {
+                                LDQO.AddExactInt(ppp.Name, p.ExactInt);
+                            }
+                            break;
+                        case OptionType.ExactString:
+                            {
+                                LDQO.AddExactString(ppp.Name, p.ExactString);
+                            }
+                            break;
+                        case OptionType.Range:
+                            {
+                                LDQO.AddRange(ppp.Name, p.Range);
+                            }
+                            break;
+                        case OptionType.Relation:
+                            {
+                                LDQO.AddRelation(ppp.Name, p.Relation);
+                            }
+                            break;
+                    }
                 }
             }
+            Console.WriteLine(LDQO.GetQuery());
+            IQueryable<Employee> employeeContext = _context.Employee.Where(LDQO.GetQuery());
+            return View("Index", employeeContext.ToList());
+            // return RedirectToAction(nameof(SearchSelection));
+            // Console.WriteLine(LDQO.query);
+            //IQueryable<Employee> employeeContext = _context.Employee.Where(LDQO.query);
+
+            Console.WriteLine($"Execution Time (ms): {bench.Elapsed.TotalMilliseconds}");
+            bench.Stop();
 
 
+            //  return RedirectToAction(nameof(SearchSelection));
 
-
-
-            return View("Index",employeeContext.ToList());
+            // return View("Index", employeeContext.ToList());
         }
 
         [HttpPost]
         public IActionResult Test(SearchParameters sp)
         {
-            
+
             return RedirectToAction(nameof(SearchSelection));
         }
         public IActionResult SearchResults()

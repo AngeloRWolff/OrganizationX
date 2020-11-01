@@ -82,7 +82,9 @@ namespace OrganizationX.Models
 
     public class Option
     {
-        public string[] Exact { get; set; }
+        public string[] ExactString { get; set; }
+
+        public int[] ExactInt { get; set; }
 
         public IntegerRange Range { get; set; }
 
@@ -93,8 +95,8 @@ namespace OrganizationX.Models
 
     public class IntegerRange
     {
-        public int Min { get; set; }
-        public int Max { get; set; }
+        public int Min { get; set; } = -1;
+        public int Max { get; set; } = -1;
     }
 
     public class RelationCondition
@@ -113,7 +115,8 @@ namespace OrganizationX.Models
 
     public enum OptionType
     {
-        Exact,
+        ExactInt,
+        ExactString,
         Range,
         Relation,
         None
