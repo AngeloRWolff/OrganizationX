@@ -1315,6 +1315,28 @@
           "lib/netstandard2.0/SQLitePCLRaw.provider.dynamic_cdecl.dll": {}
         }
       },
+      "Syncfusion.EJ2.AspNet.Core/18.3.0.44": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "[11.0.2, 13.0.0)",
+          "Syncfusion.Licensing": "18.3.0.44"
+        },
+        "compile": {
+          "lib/netstandard2.1/Syncfusion.EJ2.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/Syncfusion.EJ2.dll": {}
+        }
+      },
+      "Syncfusion.Licensing/18.3.0.44": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/Syncfusion.Licensing.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Syncfusion.Licensing.dll": {}
+        }
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -4805,6 +4827,50 @@
         "lib/netstandard2.0/SQLitePCLRaw.provider.dynamic_cdecl.dll",
         "sqlitepclraw.provider.dynamic_cdecl.2.0.2.nupkg.sha512",
         "sqlitepclraw.provider.dynamic_cdecl.nuspec"
+      ]
+    },
+    "Syncfusion.EJ2.AspNet.Core/18.3.0.44": {
+      "sha512": "MQTGOQU3ipBLAU4CdPC948Ph6v4HN8+BmcPp4anbYXk2SrRlbxjXJmzSa4uu+lc1KfqEbBMfgFG6hOSSaZC3HQ==",
+      "type": "package",
+      "path": "syncfusion.ej2.aspnet.core/18.3.0.44",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net451/Syncfusion.EJ2.dll",
+        "lib/netstandard1.6/Syncfusion.EJ2.dll",
+        "lib/netstandard2.0/Syncfusion.EJ2.dll",
+        "lib/netstandard2.1/Syncfusion.EJ2.dll",
+        "syncfusion.ej2.aspnet.core.18.3.0.44.nupkg.sha512",
+        "syncfusion.ej2.aspnet.core.nuspec"
+      ]
+    },
+    "Syncfusion.Licensing/18.3.0.44": {
+      "sha512": "n7d8zQp2EC3WRXpwOGT0bJgDRrTrilEt0sxXmKjCqB43Lz39UZBZhq7XmyZKG7OiEQArr/DRJ5UnwCMvnN3RIg==",
+      "type": "package",
+      "path": "syncfusion.licensing/18.3.0.44",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/MonoAndroid10.0/Syncfusion.Licensing.dll",
+        "lib/MonoAndroid90/Syncfusion.Licensing.dll",
+        "lib/Xamarin.Mac/Syncfusion.Licensing.dll",
+        "lib/Xamarin.iOS10/Syncfusion.Licensing.dll",
+        "lib/net20/Syncfusion.Licensing.dll",
+        "lib/net35/Syncfusion.Licensing.dll",
+        "lib/net40/Syncfusion.Licensing.dll",
+        "lib/net45/Syncfusion.Licensing.dll",
+        "lib/net451/Syncfusion.Licensing.dll",
+        "lib/net46/Syncfusion.Licensing.dll",
+        "lib/netcoreapp3.1/Syncfusion.Licensing.dll",
+        "lib/netcoreapp5.0/Syncfusion.Licensing.dll",
+        "lib/netstandard1.0/Syncfusion.Licensing.dll",
+        "lib/netstandard1.2/Syncfusion.Licensing.dll",
+        "lib/netstandard1.4/Syncfusion.Licensing.dll",
+        "lib/netstandard2.0/Syncfusion.Licensing.dll",
+        "lib/portable-win+net45+wp80+win81+wpa81/Syncfusion.Licensing.dll",
+        "lib/uap10.0/Syncfusion.Licensing.dll",
+        "syncfusion.licensing.18.3.0.44.nupkg.sha512",
+        "syncfusion.licensing.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -8987,6 +9053,7 @@
       "Microsoft.EntityFrameworkCore.Sqlite >= 3.1.9",
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.1",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.4",
+      "Syncfusion.EJ2.AspNet.Core >= 18.3.0.44",
       "System.Linq.Dynamic.Core >= 1.2.5"
     ]
   },
@@ -9054,6 +9121,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[3.1.4, )"
+          },
+          "Syncfusion.EJ2.AspNet.Core": {
+            "target": "Package",
+            "version": "[18.3.0.44, )"
           },
           "System.Linq.Dynamic.Core": {
             "target": "Package",

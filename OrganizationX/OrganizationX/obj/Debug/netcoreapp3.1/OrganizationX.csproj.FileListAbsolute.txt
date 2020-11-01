@@ -223,5 +223,3 @@ C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\Employees\SearchSelection.cshtml.g.cs
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\OrganizationX.csprojAssemblyReference.cache
 C:\OrganizationX\OrganizationX\OrganizationX\bin\Debug\netcoreapp3.1\System.Linq.Dynamic.Core.dll
-C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\OrganizationX.MvcApplicationPartsAssemblyInfo.cs
-C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\OrganizationX.MvcApplicationPartsAssemblyInfo.cache
