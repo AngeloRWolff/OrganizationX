@@ -1,126 +1,35 @@
-﻿@model List<OrganizationX.Models.Employee>
+﻿@model IEnumerable<OrganizationX.Models.Employee>
 @{
     ViewData["Title"] = "SearchResults";
-    Console.WriteLine(Model.Count);
 }
 
-<h1>SearchResults</h1>
-<table>
-    @if (Model != null)
-    {
-        foreach (Employee item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Age)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Attrition)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BusinessTravel)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DailyRate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Department)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DistanceFromHome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Education)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EducationField)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeCount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EnvironmentSatisfaction)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gender)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HourlyRate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.JobInvolvement)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.JobLevel)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.JobRole)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.JobSatisfaction)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MaritalStatus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MonthlyIncome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MonthlyRate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumCompaniesWorked)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Over18)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OverTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PercentSalaryHike)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PerformanceRating)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RelationshipSatisfaction)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StandardHours)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StockOptionLevel)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalWorkingYears)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrainingTimesLastYear)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WorkLifeBalance)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.YearsAtCompany)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.YearsInCurrentRole)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.YearsSinceLastPromotion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.YearsWithCurrManager)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.EmployeeNumber">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.EmployeeNumber">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.EmployeeNumber">Delete</a>
-                </td>
-            </tr>
+    <div class="view-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="table-header">Employee Number</th>
+                    <th class="table-header">Last Updated</th>
+                    <th class="table-header">Updated By</th>
+                    <th class="table-header">Edit</th>
+                    <th class="table-header">View</th>
+                    <th class="table-header">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @foreach (var val in Model)
+                    {
+                    <td>@Html.ValueFor(id => val.EmployeeNumber)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    }
+                </tr>
+            </tbody>
+            
+        </table>               
+    </div>
 
-        }
 
-    }
-</table>

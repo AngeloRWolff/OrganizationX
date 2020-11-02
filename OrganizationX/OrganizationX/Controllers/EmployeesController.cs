@@ -248,7 +248,7 @@ namespace OrganizationX.Controllers
             }
             Console.WriteLine(LDQO.GetQuery());
             IQueryable<Employee> employeeContext = _context.Employee.Where(LDQO.GetQuery());
-            return View("Index", employeeContext.ToList());
+            return View("SearchResults", employeeContext.ToList());
             // return RedirectToAction(nameof(SearchSelection));
             // Console.WriteLine(LDQO.query);
             //IQueryable<Employee> employeeContext = _context.Employee.Where(LDQO.query);
@@ -265,7 +265,48 @@ namespace OrganizationX.Controllers
         // GET: Analytics
         public IActionResult Analytics()
         {
+            List<PieChartData> chartData = new List<PieChartData>
+            {
+
+                new PieChartData { xValue = "Chrome", yValue = 37 },
+                new PieChartData { xValue = "UC Browser", yValue = 17 },
+                new PieChartData { xValue = "iPhone", yValue = 19 },
+                new PieChartData { xValue = "Others", yValue = 4  },
+                new PieChartData { xValue = "Opera", yValue = 11 },
+                new PieChartData { xValue = "Android", yValue = 12 },
+            };
+            ViewBag.dataSource = chartData;
+
+            List<ChartData> barChartData = new List<ChartData>
+            {
+                new ChartData { xValue = "2014", yValue = 21 },
+                new ChartData { xValue = "2015", yValue = 24 },
+                new ChartData { xValue = "2016", yValue = 36 },
+                new ChartData { xValue = "2017", yValue = 38 },
+                new ChartData { xValue = "2018", yValue = 54 },
+                new ChartData { xValue = "2019", yValue = 57 },
+                new ChartData { xValue = "2020", yValue = 70 },
+            };
+            ViewBag.dataSource = barChartData;
+
             return View();
+        }
+
+        public IActionResult SearchResults()
+        {
+            return View();
+        }
+
+        public class ChartData
+        {
+            public string xValue;
+            public double yValue;
+        }
+
+        public class PieChartData
+        {
+            public string xValue;
+            public double yValue;
         }
 
         [HttpPost]
@@ -274,11 +315,8 @@ namespace OrganizationX.Controllers
 
             return RedirectToAction(nameof(SearchSelection));
         }
-        public IActionResult SearchResults()
-        {
-            return View();
-        }
-
+        
+       
 
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]

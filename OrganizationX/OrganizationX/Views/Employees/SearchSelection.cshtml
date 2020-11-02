@@ -53,13 +53,13 @@
                 </select>
 
 
-                <button class="float-right inline-block" type="button" onclick="deselect('@k.Name')">--X--</button>
+                <button class="float-right inline-block close-button" type="button" onclick="deselect('@k.Name')">X</button>
             </div>
 
 
             <div class="inline-block text-center max-width" style="margin-top:15px;" id='@k.Name`option`'>
 
-                <button class="inline-block" type="button" onclick="clearF('@k.Name')">Clear</button>
+
                 @foreach (var i in ChildSearchProperty)
                 {
                     switch (i.Name)
@@ -101,46 +101,46 @@
                                 <div style="display:none" group="ExactInt" id='@k.Name`ExactInt`'>
                                     <div>Custom</div>
                                     <input class="input-light width-med round-15" type="number" data-val="true" data-val-required="The Exact field is required." id="Age_Exact" name="@name" value="" />
-                                    </div>
-                                    }
-                                    break;
-
-                                    case "Range":
-                                    {
-                                    <div class="inline-block text-center max-width" style="display:none" group="Range" id='@k.Name`Range`'>
-                                        @foreach (var b in MinMaxProperty)
-                                        {
-                                            String name = $"{k.Name}.{i.Name}.{b.Name}";
-                                            String id = $"{k.Name}_{i.Name}_{b.Name}";
-                                            <div class="inline-block">
-                                                @b.Name
-                                                <input min="0" class="inline-block round-15 width-small input-light" type="number" data-val="true" data-val-required="The Exact field is required." id="Age_Exact" name="@name" value="" />
-                                            </div>
-                                        }
-                                    </div>
-                                    }
-                                    break;
-
-                                    case "Relation":
-                                    {
-                                    string asciiName = $"{k.Name}.{i.Name}.Relation.AsciiCode";
-                                    string iName = $"{k.Name}.{i.Name}.Value";
-                                    <div style="display:none" group="Relation" id='@k.Name`Condition`'>
-                                        <select name="@asciiName">
-                                            @foreach (var relop in g.RelationOption)
-                                            {
-                                                <option>@relop.AsciiCode</option>
-                                            }
-                                        </select>
-                                        Value: <input class="input-light width-med round-15" name="@iName" />
-                                    </div>
-                                    }
-                                    break;
-                                    }
-                                    }
-
                                 </div>
-                            </div>
+                            }
+                            break;
+
+                        case "Range":
+                            {
+                                <div class="inline-block text-center max-width" style="display:none" group="Range" id='@k.Name`Range`'>
+                                    @foreach (var b in MinMaxProperty)
+                                    {
+                                        String name = $"{k.Name}.{i.Name}.{b.Name}";
+                                        String id = $"{k.Name}_{i.Name}_{b.Name}";
+                                        <div class="inline-block">
+                                            @b.Name
+                                            <input min="0" class="inline-block round-15 width-small input-light" type="number" data-val="true" data-val-required="The Exact field is required." id="Age_Exact" name="@name" value="" />
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            break;
+
+                        case "Relation":
+                            {
+                                string asciiName = $"{k.Name}.{i.Name}.Relation.AsciiCode";
+                                string iName = $"{k.Name}.{i.Name}.Value";
+                                <div style="display:none" group="Relation" id='@k.Name`Condition`'>
+                                    <select name="@asciiName">
+                                        @foreach (var relop in g.RelationOption)
+                                        {
+                                            <option>@relop.AsciiCode</option>
+                                        }
+                                    </select>
+                                    Value: <input class="input-light width-med round-15" name="@iName" />
+                                </div>
+                            }
+                            break;
+                    }
+                }
+
+            </div>
+        </div>
     }
     hello <input type="submit" />
 </form>
