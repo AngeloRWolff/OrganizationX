@@ -16,6 +16,6 @@ namespace OrganizationX.Data
 
         public DbSet<OrganizationX.Models.Employee> Employee { get; set; }
 
-        public DbSet<OrganizationX.Models.Administration> Administration { get; set; }
+        public DbSet<OrganizationX.Models.Authorization> Administration { get; set; }
     }
 }

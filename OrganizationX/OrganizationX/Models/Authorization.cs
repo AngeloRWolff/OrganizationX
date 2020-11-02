@@ -6,16 +6,34 @@ using System.Threading.Tasks;
 
 namespace OrganizationX.Models
 {
-    public class Administration
+    public class Authorization
     {
         [Key]
         public int Id { get; set; }
 
-        public String Username { get; set; }
+        [Required]
+        public string EmailAddress { get; set; }
 
-        public String PasswordHash { get; set; }
+        [Required]
+        public int RolePolicy { get; set; }
 
+        [Phone]
+        [Required]
+        public int PhoneNumber { get; set; }
+
+        [Required]
         [EmailAddress]
-        public String Email { get; set; }
+        public string Email { get; set; }
+
+        [Required]
+        public string Token { get; set; }
+
+        public DateTime TokenExpirationDate { get; set; }
+
+        public DateTime CreationTime { get; set; }
+
+        public int CreatedBy { get; set; }
     }
+
+  
 }
