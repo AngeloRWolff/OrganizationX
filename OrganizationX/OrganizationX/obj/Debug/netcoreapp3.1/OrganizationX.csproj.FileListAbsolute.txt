@@ -193,3 +193,8 @@ C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\Authorizations\Details.cshtml.g.cs
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\Authorizations\Edit.cshtml.g.cs
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\Authorizations\Index.cshtml.g.cs
+C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\OXUsers\Create.cshtml.g.cs
+C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\OXUsers\Delete.cshtml.g.cs
+C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\OXUsers\Details.cshtml.g.cs
+C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\OXUsers\Edit.cshtml.g.cs
+C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\OXUsers\Index.cshtml.g.cs
