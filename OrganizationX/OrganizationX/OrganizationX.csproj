@@ -21,6 +21,9 @@
 
   <ItemGroup>
     <Folder Include="Areas\" />
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="Data\Static\" />
+    <Folder Include="Migrations\Auth\" />
   </ItemGroup>
 
 </Project>

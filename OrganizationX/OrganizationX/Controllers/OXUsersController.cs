@@ -10,22 +10,22 @@ using OrganizationX.Models;
 
 namespace OrganizationX.Controllers
 {
-    public class AuthorizationsController : Controller
+    public class OXUsersController : Controller
     {
-        private readonly AuthorizationContext _context;
+        private readonly OXUserContext _context;
 
-        public AuthorizationsController(AuthorizationContext context)
+        public OXUsersController(OXUserContext context)
         {
             _context = context;
         }
 
-        // GET: Authorizations
+        // GET: OXUsers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Authorization.ToListAsync());
+            return View(await _context.OXUser.ToListAsync());
         }
 
-        // GET: Authorizations/Details/5
+        // GET: OXUsers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace OrganizationX.Controllers
                 return NotFound();
             }
 
-            var authorization = await _context.Authorization
+            var oXUser = await _context.OXUser
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (authorization == null)
+            if (oXUser == null)
             {
                 return NotFound();
             }
 
-            return View(authorization);
+            return View(oXUser);
         }
 
-        // GET: Authorizations/Create
+        // GET: OXUsers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Authorizations/Create
+        // POST: OXUsers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,PhoneNumber,Role,Token,TokenExpireDate,CreatedDate,TokenStatus")] Authorization authorization)
+        public async Task<IActionResult> Create([Bind("Id,Username,EmailAddress,PasswordHash,RoleLevel,Permissions")] OXUser oXUser)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(authorization);
+                _context.Add(oXUser);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(authorization);
+            return View(oXUser);
         }
 
-        // GET: Authorizations/Edit/5
+        // GET: OXUsers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace OrganizationX.Controllers
                 return NotFound();
             }
 
-            var authorization = await _context.Authorization.FindAsync(id);
-            if (authorization == null)
+            var oXUser = await _context.OXUser.FindAsync(id);
+            if (oXUser == null)
             {
                 return NotFound();
             }
-            return View(authorization);
+            return View(oXUser);
         }
 
-        // POST: Authorizations/Edit/5
+        // POST: OXUsers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,PhoneNumber,Role,Token,TokenExpireDate,CreatedDate,TokenStatus")] Authorization authorization)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,EmailAddress,PasswordHash,RoleLevel,Permissions")] OXUser oXUser)
         {
-            if (id != authorization.Id)
+            if (id != oXUser.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace OrganizationX.Controllers
             {
                 try
                 {
-                    _context.Update(authorization);
+                    _context.Update(oXUser);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AuthorizationExists(authorization.Id))
+                    if (!OXUserExists(oXUser.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace OrganizationX.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(authorization);
+            return View(oXUser);
         }
 
-        // GET: Authorizations/Delete/5
+        // GET: OXUsers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace OrganizationX.Controllers
                 return NotFound();
             }
 
-            var authorization = await _context.Authorization
+            var oXUser = await _context.OXUser
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (authorization == null)
+            if (oXUser == null)
             {
                 return NotFound();
             }
 
-            return View(authorization);
+            return View(oXUser);
         }
 
-        // POST: Authorizations/Delete/5
+        // POST: OXUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var authorization = await _context.Authorization.FindAsync(id);
-            _context.Authorization.Remove(authorization);
+            var oXUser = await _context.OXUser.FindAsync(id);
+            _context.OXUser.Remove(oXUser);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AuthorizationExists(int id)
+        private bool OXUserExists(int id)
         {
-            return _context.Authorization.Any(e => e.Id == id);
+            return _context.OXUser.Any(e => e.Id == id);
         }
     }
 }

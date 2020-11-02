@@ -7,14 +7,12 @@ using OrganizationX.Models;
 
 namespace OrganizationX.Data
 {
-    public class EmployeeContext : DbContext
+    public class AuthorizationContext : DbContext
     {
-        public EmployeeContext (DbContextOptions<EmployeeContext> options)
+        public AuthorizationContext (DbContextOptions<AuthorizationContext> options)
             : base(options)
         {
         }
-
-        public DbSet<OrganizationX.Models.Employee> Employee { get; set; }        
 
         public DbSet<OrganizationX.Models.Authorization> Authorization { get; set; }
     }
