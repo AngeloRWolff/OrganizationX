@@ -1,0 +1,32 @@
+﻿@model OrganizationX.Models.LoginModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <div class="login-background">
+        <section style="height:20%"></section>   
+        <div class="login-form">
+            <div class="login-form-header text-center">
+                <section style="height:3px"></section>
+                <img class="logo-large" src="~/images/logo.png" />
+            </div>
+            <section style="height:10px"></section>
+            <form asp-action="Login">
+                <div style="width: 80%; margin:auto;">
+                    <div>
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <section style="height:20px"></section>
+                <input class="login-button" value="Login" type="submit" />
+            </form>
+        </div>
+
+    </div>

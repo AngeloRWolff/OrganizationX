@@ -33,6 +33,9 @@
     </style>
 </head>
 <body>
+    
+    @if (User.Identity.IsAuthenticated)
+    {
     <header class="side-nav">
         <nav>
             <div>
@@ -68,24 +71,26 @@
         </nav>
 
     </header>
+
+
     <nav class="header">
         <nav>
-            <a class="nav-link text-light inline-block" asp-area="" asp-controller="Authorizations" asp-action="Create">Create</a>
-            <a class="nav-link text-light inline-block" asp-area="" asp-controller="Authorizations" asp-action="Edit">Manage</a>
+            
+           
+
+            <partial name="_AdministrationPartial" />
             <partial name="_LoginPartial" />
         </nav>
     </nav>
+    }
     <div>
-        <main role="main">
-            @RenderBody()
+        
+        <main >
+                @RenderBody();
         </main>
+
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - OrganizationX - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

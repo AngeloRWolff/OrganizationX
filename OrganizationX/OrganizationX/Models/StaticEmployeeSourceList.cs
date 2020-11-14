@@ -13,7 +13,7 @@ namespace OrganizationX.Models
             
             {"Attrition", new List<string>{"Yes","No"}},
             {"BusinessTravel", new List<string>{ "Non-Travel", "Travel_Frequently", "Travel_Rarely"}},
-            {"Department", new List<string>{ "Research & Development", "Sales"}},
+            {"Department", new List<string>{ "Research & Development", "Sales", "Human Resources"}},
             {"EducationField", new List<string>{"Human Resources","Life Sciences","Marketing", "Medical","Other","Technical Degree"}},
             {"Gender", new List<string>{ "Female","Male" }},
             {"JobRole", new List<string>{"Healthcare Representative","Human Resources","Laboratory Technician","Manager", "Manufacturing Director","Research Director","Research Scientist","Sales Executive","Sales Representative"}},

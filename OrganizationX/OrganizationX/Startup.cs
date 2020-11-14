@@ -74,7 +74,8 @@ namespace OrganizationX
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=OXUsers}/{action=Login}/{id?}");
+
                 endpoints.MapRazorPages();
             });
         }

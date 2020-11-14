@@ -19,6 +19,8 @@ namespace OrganizationX.Models
 
         public RoleLevel Role { get; set; }
 
+        public string Department { get; set; }
+
         public string Token { get; set; }
 
         public DateTime TokenExpireDate { get; set; }
@@ -33,12 +35,14 @@ namespace OrganizationX.Models
     {
         Level0,
         Level1,
-        Level2
+        Level2,
+        Level3,
     }
+
 
     public enum TokenStatus
     {
-        Active,
+        Pending,
         Consumed,
         Expired
     }

@@ -8,9 +8,13 @@
     var MinMaxProperty = new IntegerRange().GetType().GetProperties();
 
     var g = new StaticEmployeeSourceList();
+
+
     char index = 'z';
 }
 
+@User.Identity.Name;
+@Model.Department.ExactString[0]
 <div class="text-center">
     <div id="searchSelection" class="search-right-pane">
         @foreach (var key in keys)
@@ -40,11 +44,21 @@
                 <select class="search-header-select" reset="true" name="@optionType" align-text-right trim-top-left" onchange="changeForm(this.value,'@k.Name`option`')">
                     @if (k.PropertyType.Name == "String")
                     {
-                        <option class="text-center" value="" selected disabled hidden>select option</option>
-                        <option class="text-center" value="ExactString">Exact</option>
+                        if (k.Name == "Department")
+                        {
+                            <option class="text-center" value="ExactString">Exact</option>
+
+                        }
+                        else
+                        {
+
+                            <option class="text-center" value="" selected disabled hidden>select option</option>
+                            <option class="text-center" value="ExactString">Exact</option>
+                        }
                     }
                     else
                     {
+
                         <option class="text-center" value="None" selected disabled hidden>select option</option>
                         <option class="text-center" value="ExactInt">Exact</option>
                         <option class="text-center" value="Range">Range</option>
@@ -75,12 +89,21 @@
                                         if (list.Count > 0)
                                         {
                                             <div id="Age_Exact">
-                                                @foreach (string item in list)
+                                                @if (Model.Department.ExactString[0] == "Sales")
                                                 {
-                                                    <div class="inline-block pad-right-small">
-                                                        <input name="@name" value="@item" type="checkbox" id="@id">
-                                                        <label>@item</label>
-                                                    </div>
+                                                    <input checked name="@name" value="@Model.Department.ExactString[0]" type="checkbox" id="@id">
+                                                }
+                                                else
+
+                                                {
+
+                                                    @foreach (string item in list)
+                                                    {
+                                                        <div class="inline-block pad-right-small">
+                                                            <input name="@name" value="@item" type="checkbox" id="@id">
+                                                            <label>@item</label>
+                                                        </div>
+                                                    }
                                                 }
                                             </div>
 

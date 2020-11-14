@@ -18,9 +18,11 @@ namespace OrganizationX.Controllers
     public class EmployeesController : Controller
     {
         private readonly EmployeeContext _context;
+        private readonly OXUserContext _user;
 
-        public EmployeesController(EmployeeContext context)
+        public EmployeesController(EmployeeContext context, OXUserContext user)
         {
+            _user = user;
             _context = context;
         }
 
@@ -199,9 +201,24 @@ namespace OrganizationX.Controllers
         }
 
         [HttpGet]
-        public IActionResult SearchSelection()
+        public async Task<IActionResult> SearchSelection()
         {
-            return View();
+            SearchParameters sp = new SearchParameters();
+            Option op = new Option();
+            string[] k = new string[1];
+            Console.WriteLine(User.Identity.Name);
+            var employee = await _user.OXUser
+                .FirstOrDefaultAsync(m => m.Username == User.Identity.Name);
+
+            Console.WriteLine(employee.Department);
+            //Query to get department 
+
+            k[0] = "Sales";
+            op.ExactString= k;
+            sp.Department = op;
+
+
+            return View(sp);
         }
 
         [HttpPost]
@@ -248,7 +265,9 @@ namespace OrganizationX.Controllers
             }
             Console.WriteLine(LDQO.GetQuery());
             IQueryable<Employee> employeeContext = _context.Employee.Where(LDQO.GetQuery());
-            return View("SearchResults", employeeContext.ToList());
+
+            return View("Index", employeeContext.ToList());
+            //return View("SearchResults", employeeContext.ToList());
             // return RedirectToAction(nameof(SearchSelection));
             // Console.WriteLine(LDQO.query);
             //IQueryable<Employee> employeeContext = _context.Employee.Where(LDQO.query);

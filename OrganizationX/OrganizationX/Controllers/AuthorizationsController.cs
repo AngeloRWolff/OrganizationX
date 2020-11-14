@@ -54,8 +54,9 @@ namespace OrganizationX.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,PhoneNumber,Role,Token,TokenExpireDate,CreatedDate,TokenStatus")] Authorization authorization)
+        public async Task<IActionResult> Create([Bind("Id,Email,PhoneNumber,Role,Token,TokenExpireDate,CreatedDate,TokenStatus, Department")] Authorization authorization)
         {
+            authorization.Token = authorization.Email;
             if (ModelState.IsValid)
             {
                 _context.Add(authorization);

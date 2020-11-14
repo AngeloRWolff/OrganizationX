@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+    <ul class="inline-block">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <li class="inline-block">
+                <a class="nav-link text-light inline-block" asp-area="" asp-controller="Authorizations" asp-action="Create">Create</a>
+            </li>
+            <li class="inline-block">
+                <a class="nav-link text-light inline-block" asp-area="" asp-controller="Authorizations" asp-action="Index">Manage</a>
+            </li>
+        }
+        else
+        {
+            
+        }
+    </ul>

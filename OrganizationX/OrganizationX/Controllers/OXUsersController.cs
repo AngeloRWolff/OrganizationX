@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,15 +16,25 @@ namespace OrganizationX.Controllers
     public class OXUsersController : Controller
     {
         private readonly OXUserContext _context;
+        private readonly AuthorizationContext _authcontext;
+         private readonly SignInManager<IdentityUser> _signInManager;
+         private readonly UserManager<IdentityUser> _userManager;
 
-        public OXUsersController(OXUserContext context)
+        //, UserManager<OXUser> userManager, SignInManager<OXUser> signInManager
+        public OXUsersController(OXUserContext context, AuthorizationContext authorizationContext, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _context = context;
+            _authcontext = authorizationContext;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // GET: OXUsers
+      
         public async Task<IActionResult> Index()
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction(nameof(Login));
             return View(await _context.OXUser.ToListAsync());
         }
 
@@ -43,6 +56,91 @@ namespace OrganizationX.Controllers
             return View(oXUser);
         }
 
+        public IActionResult Error()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("Register/{token?}")]
+        public  IActionResult Register(string token)
+        {
+            Console.WriteLine("Token: " + token);
+            IQueryable<Authorization> authUser = _authcontext.Authorization.Where(vt => vt.Token == token); 
+            
+            if (authUser.Count() == 0)
+            {
+                return RedirectToAction(nameof(Error));
+            }
+
+            OXUser oXUser = new OXUser();
+
+            oXUser.EmailAddress = authUser.First().Email;
+            oXUser.PhoneNumber = authUser.First().PhoneNumber;
+            oXUser.RoleLevel = authUser.First().Role;
+
+           
+            
+
+            return View(oXUser);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Registfer(OXUser user)
+        {
+            Console.WriteLine("Registering User");
+            return RedirectToPage("Index", "Home");
+        }
+
+
+
+            // GET: ValidateToken
+            public IActionResult ValidateToken2(string token)
+        {
+            Console.WriteLine("Token: " + token);
+            IQueryable<Authorization> oXUsers = _authcontext.Authorization;
+            oXUsers.Where(vt => vt.Token == token);
+            if (oXUsers.First() == null)
+            {
+                return RedirectToAction(nameof(Error));
+            }
+            else
+            {
+                //var oooo = new OXUser { Username = user.Username, EmailAddress = user.EmailAddress };
+               // var result = await _userManager.CreateAsync(oooo, oXUser.PasswordHash);
+                Console.WriteLine("Registered User");
+            }
+            return View();
+        }
+
+
+      
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginModel _login)
+        {
+            IQueryable<OXUser> oXUser = _context.OXUser.Where(uName => uName.Username == _login.Username);
+            if (oXUser.First().PasswordHash == _login.Password)
+            {
+                
+                Console.WriteLine(": login failed successfully ");
+
+                var result = await _signInManager.PasswordSignInAsync(_login.Username, _login.Password, false, lockoutOnFailure: false);
+                Console.WriteLine(result.ToString());
+                Console.WriteLine(_signInManager.IsSignedIn(User));
+            }
+            else
+            {
+                Console.WriteLine("Login failed");
+            }
+            return LocalRedirect("~/Home/Index");
+        }
+
         // GET: OXUsers/Create
         public IActionResult Create()
         {
@@ -58,6 +156,10 @@ namespace OrganizationX.Controllers
         {
             if (ModelState.IsValid)
             {
+                Console.WriteLine("Registering user success!");
+
+                var oooo = new IdentityUser { UserName = oXUser.Username, Email = oXUser.EmailAddress, EmailConfirmed=true };
+                 var result = await _userManager.CreateAsync(oooo, oXUser.PasswordHash);
                 _context.Add(oXUser);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
