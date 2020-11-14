@@ -33,10 +33,10 @@ namespace OrganizationX.Models
 
     public enum RoleLevel
     {
-        Level0,
-        Level1,
-        Level2,
-        Level3,
+        Level0 = 0,
+        Level1 = 1,
+        Level2 = 2,
+        Level3 = 3,
     }
 
 

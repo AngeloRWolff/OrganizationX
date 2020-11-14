@@ -1,0 +1,11 @@
+﻿@model OrganizationX.Models.ErrorModel
+
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1>An error occured [@Model.ErrorCode]</h1>
+
+<h2>@Model.ErrorMessage</h2>
+
+<a class="btn-primary" href ="@Model.ReturnUrl">@Model.ReturnUrlName</a>

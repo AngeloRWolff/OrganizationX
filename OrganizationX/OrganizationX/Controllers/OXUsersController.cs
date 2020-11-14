@@ -78,7 +78,7 @@ namespace OrganizationX.Controllers
             oXUser.EmailAddress = authUser.First().Email;
             oXUser.PhoneNumber = authUser.First().PhoneNumber;
             oXUser.RoleLevel = authUser.First().Role;
-
+            oXUser.Department = authUser.First().Department;
            
             
 
@@ -152,14 +152,14 @@ namespace OrganizationX.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Username,EmailAddress,PasswordHash,RoleLevel,Permissions")] OXUser oXUser)
+        public async Task<IActionResult> Create([Bind("Id,Username,EmailAddress, Department,PasswordHash,RoleLevel,Permissions")] OXUser oXUser)
         {
             if (ModelState.IsValid)
             {
-                Console.WriteLine("Registering user success!");
+                Console.WriteLine("Registering user success! Department : " + oXUser.Department);
 
                 var oooo = new IdentityUser { UserName = oXUser.Username, Email = oXUser.EmailAddress, EmailConfirmed=true };
-                 var result = await _userManager.CreateAsync(oooo, oXUser.PasswordHash);
+                var result = await _userManager.CreateAsync(oooo, oXUser.PasswordHash);
                 _context.Add(oXUser);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

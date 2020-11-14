@@ -13,7 +13,7 @@
     char index = 'z';
 }
 
-@User.Identity.Name;
+
 @Model.Department.ExactString[0]
 <div class="text-center">
     <div id="searchSelection" class="search-right-pane">
@@ -89,7 +89,7 @@
                                         if (list.Count > 0)
                                         {
                                             <div id="Age_Exact">
-                                                @if (Model.Department.ExactString[0] == "Sales")
+                                                @if (i.Name == "Department")
                                                 {
                                                     <input checked name="@name" value="@Model.Department.ExactString[0]" type="checkbox" id="@id">
                                                 }

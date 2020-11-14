@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OrganizationX.Data;
+using OrganizationX.Helpers;
 using OrganizationX.Models;
 
 namespace OrganizationX.Controllers
@@ -13,10 +14,12 @@ namespace OrganizationX.Controllers
     public class AuthorizationsController : Controller
     {
         private readonly AuthorizationContext _context;
+        private readonly OXUserContext _oXUser;
 
-        public AuthorizationsController(AuthorizationContext context)
+        public AuthorizationsController(AuthorizationContext context, OXUserContext oXUser)
         {
             _context = context;
+            _oXUser = oXUser;
         }
 
         // GET: Authorizations
@@ -43,9 +46,49 @@ namespace OrganizationX.Controllers
             return View(authorization);
         }
 
+        [HttpGet]
+        public IActionResult Error(ErrorModel err)
+        {
+            return View(err);
+        }
+
         // GET: Authorizations/Create
         public IActionResult Create()
         {
+
+            ErrorModel err = new ErrorModel
+            {
+                ErrorCode = 401,
+                ErrorMessage = "You do not have access to this resource!",
+                ReturnUrl = "~/Home/Index",
+                ReturnUrlName = "Home"
+            };
+            if (!User.Identity.IsAuthenticated)
+            {
+                ErrorModel errLog = new ErrorModel
+                {
+                    ErrorCode = 401,
+                    ErrorMessage = "You are not currently logged in!",
+                    ReturnUrl = "",
+                    ReturnUrlName = "Login"
+                };
+                return View("Error", errLog);
+            }
+            var user = _oXUser.OXUser
+            .First(m => m.Username == User.Identity.Name);
+            Console.WriteLine(user.EmailAddress);
+            var auth = _context.Authorization
+                .First(m => m.Email == user.EmailAddress);
+            Console.WriteLine(auth.Email);
+            if (auth.Email == null)
+            {
+                return View("Error", err);
+            }
+            if (auth.Role != RoleLevel.Level0 && auth.Role != RoleLevel.Level1)
+            {
+                return View("Error", err);
+            }
+
             return View();
         }
 
@@ -56,6 +99,8 @@ namespace OrganizationX.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Email,PhoneNumber,Role,Token,TokenExpireDate,CreatedDate,TokenStatus, Department")] Authorization authorization)
         {
+
+
             authorization.Token = authorization.Email;
             if (ModelState.IsValid)
             {

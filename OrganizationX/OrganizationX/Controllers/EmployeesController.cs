@@ -213,7 +213,7 @@ namespace OrganizationX.Controllers
             Console.WriteLine(employee.Department);
             //Query to get department 
 
-            k[0] = "Sales";
+            k[0] = employee.Department;
             op.ExactString= k;
             sp.Department = op;
 
