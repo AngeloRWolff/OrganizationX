@@ -35,10 +35,10 @@ namespace OrganizationX.Models
 
     public enum RoleLevel
     {
-        Level0 = 0,
-        Level1 = 1,
-        Level2 = 2,
-        Level3 = 3,
+        Level0 = 0, //Unresitricted Access
+        Level1 = 1, //Create/Read/Update/Delete
+        Level2 = 2, //Read/Update
+        Level3 = 3, //Read
     }
 
 

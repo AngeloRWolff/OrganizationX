@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +20,13 @@ namespace OrganizationX.Controllers
     {
         private readonly EmployeeContext _context;
         private readonly OXUserContext _user;
+        private readonly AuthorizationContext _auth;
 
-        public EmployeesController(EmployeeContext context, OXUserContext user)
+        public EmployeesController(EmployeeContext context, OXUserContext user, AuthorizationContext auth)
         {
             _user = user;
             _context = context;
+            _auth = auth;
         }
 
         // GET: Employees
@@ -112,6 +115,19 @@ namespace OrganizationX.Controllers
         // GET: Employees/Create
         public IActionResult Create()
         {
+            var user = _user.OXUser.AsQueryable().Where(d => d.Username == User.Identity.Name).First();
+            var authorization = _auth.Authorization.AsQueryable().Where(d => d.Email == user.EmailAddress).First();
+            if (user.RoleLevel != RoleLevel.Level0 && user.RoleLevel != RoleLevel.Level1)
+            {
+                ErrorModel ERR_RESTRICTED = new ErrorModel
+                {
+                    ErrorMessage = "You do not have sufficient privelidges for this action.",
+                    ErrorCode = 403,
+                    ReturnUrl = "Home/Index",
+                    ReturnUrlName = "Return",
+                };
+                return View("Error", ERR_RESTRICTED);
+            }
             return View();
         }
 
@@ -119,9 +135,11 @@ namespace OrganizationX.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Age,Attrition,BusinessTravel,DailyRate,Department,DistanceFromHome,Education,EducationField,EmployeeCount,EmployeeNumber,EnvironmentSatisfaction,Gender,HourlyRate,JobInvolvement,JobLevel,JobRole,JobSatisfaction,MaritalStatus,MonthlyIncome,MonthlyRate,NumCompaniesWorked,Over18,OverTime,PercentSalaryHike,PerformanceRating,RelationshipSatisfaction,StandardHours,StockOptionLevel,TotalWorkingYears,TrainingTimesLastYear,WorkLifeBalance,YearsAtCompany,YearsInCurrentRole,YearsSinceLastPromotion,YearsWithCurrManager")] Employee employee)
         {
+           
             if (ModelState.IsValid)
             {
                 _context.Add(employee);
@@ -132,6 +150,7 @@ namespace OrganizationX.Controllers
         }
 
         // GET: Employees/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(uint? id)
         {
             if (id == null)
@@ -151,6 +170,7 @@ namespace OrganizationX.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(uint id, [Bind("Age,Attrition,BusinessTravel,DailyRate,Department,DistanceFromHome,Education,EducationField,EmployeeCount,EmployeeNumber,EnvironmentSatisfaction,Gender,HourlyRate,JobInvolvement,JobLevel,JobRole,JobSatisfaction,MaritalStatus,MonthlyIncome,MonthlyRate,NumCompaniesWorked,Over18,OverTime,PercentSalaryHike,PerformanceRating,RelationshipSatisfaction,StandardHours,StockOptionLevel,TotalWorkingYears,TrainingTimesLastYear,WorkLifeBalance,YearsAtCompany,YearsInCurrentRole,YearsSinceLastPromotion,YearsWithCurrManager")] Employee employee)
         {

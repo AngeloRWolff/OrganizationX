@@ -29,9 +29,9 @@
                 <input asp-for="PasswordHash" class="form-control" />
                 <span asp-validation-for="PasswordHash" class="text-danger"></span>
             </div>
-            <div hidden class="form-group">
+            <div class="form-group">
                 <label asp-for="RoleLevel" class="control-label"></label>
-                <select readonly asp-for="RoleLevel" class="form-control"></select>
+                <input readonly asp-for="RoleLevel" class="form-control" />
                 <span asp-validation-for="RoleLevel" class="text-danger"></span>
             </div>
             <div hidden class="form-group">

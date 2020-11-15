@@ -9,8 +9,7 @@ namespace OrganizationX.Models
     public class StaticEmployeeSourceList
     {
         public Dictionary<string, List<string>> staticEmployeeSourceList = new Dictionary<string, List<string>>
-        {
-            
+        {            
             {"Attrition", new List<string>{"Yes","No"}},
             {"BusinessTravel", new List<string>{ "Non-Travel", "Travel_Frequently", "Travel_Rarely"}},
             {"Department", new List<string>{ "Research & Development", "Sales", "Human Resources"}},
@@ -20,8 +19,6 @@ namespace OrganizationX.Models
             {"MaritalStatus", new List<string>{"Single","Married","Divorced"}},
             {"Over18", new List<string>{"Y","N"}},
             {"OverTime", new List<string>{"Yes","No"}},
-
-
         };
         public List<String> GetList(string key)
         {
