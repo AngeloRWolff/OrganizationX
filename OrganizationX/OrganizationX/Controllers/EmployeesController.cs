@@ -235,7 +235,9 @@ namespace OrganizationX.Controllers
 
             foreach (PropertyInfo ppp in sp.GetType().GetProperties())
             {
+
                 Option p = (Option)ppp.GetValue(sp);
+                Console.WriteLine(p.ExactString[0]);
                 if (p.OptionType != OptionType.None)
                 {
                     switch (p.OptionType)

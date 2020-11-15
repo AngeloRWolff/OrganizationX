@@ -31,7 +31,6 @@
 </div>
 
 <form asp-action="SearchSelection" class="box-container">
-
     @foreach (var k in keys)
     {
         string optionType = $"{k.Name}.OptionType";
@@ -81,7 +80,7 @@
                         case "ExactString":
                             {
 
-                                <div style="display:none" group="ExactString" id='@k.Name`ExactString`'>
+                                <div style="display:block" group="ExactString" id='@k.Name`ExactString`'>
                                     @{
                                         List<String> list = g.GetList(k.Name);
                                         String name = $"{k.Name}.{i.Name}";
@@ -89,7 +88,7 @@
                                         if (list.Count > 0)
                                         {
                                             <div id="Age_Exact">
-                                                @if (i.Name == "Department")
+                                                @if (k.Name=="Department")
                                                 {
                                                     <input checked name="@name" value="@Model.Department.ExactString[0]" type="checkbox" id="@id">
                                                 }

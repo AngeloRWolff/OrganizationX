@@ -14,14 +14,8 @@ namespace OrganizationX.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
-                services.AddDbContext<OrganizationXContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("OrganizationXContextConnection")));
-
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<OrganizationXContext>();
-            });
+            
+            
         }
     }
 }

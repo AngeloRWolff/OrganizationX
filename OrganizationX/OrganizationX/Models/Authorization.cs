@@ -19,6 +19,8 @@ namespace OrganizationX.Models
 
         public RoleLevel Role { get; set; }
 
+        public string CreatedBy { get; set; }
+
         public string Department { get; set; }
 
         public string Token { get; set; }

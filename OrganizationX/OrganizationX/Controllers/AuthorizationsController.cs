@@ -25,7 +25,9 @@ namespace OrganizationX.Controllers
         // GET: Authorizations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Authorization.ToListAsync());
+            List<Authorization> authorizations = _context.Authorization.AsQueryable().Where(m => m.CreatedBy == User.Identity.Name).ToList();
+
+            return View(authorizations);
         }
 
         // GET: Authorizations/Details/5
@@ -74,19 +76,26 @@ namespace OrganizationX.Controllers
                 };
                 return View("Error", errLog);
             }
-            var user = _oXUser.OXUser
-            .First(m => m.Username == User.Identity.Name);
-            Console.WriteLine(user.EmailAddress);
-            var auth = _context.Authorization
-                .First(m => m.Email == user.EmailAddress);
-            Console.WriteLine(auth.Email);
-            if (auth.Email == null)
+            try
             {
-                return View("Error", err);
+                var user = _oXUser.OXUser
+                .First(m => m.Username == User.Identity.Name);
+                Console.WriteLine(user.EmailAddress);
+                var auth = _context.Authorization
+                    .First(m => m.Email == user.EmailAddress);
+                Console.WriteLine(auth.Email);
+                if (auth.Email == null)
+                {
+                     return View("Error", err);
+                }
+                if (auth.Role != RoleLevel.Level0 && auth.Role != RoleLevel.Level1)
+                {
+                     return View("Error", err);
+                }
             }
-            if (auth.Role != RoleLevel.Level0 && auth.Role != RoleLevel.Level1)
+            catch
             {
-                return View("Error", err);
+
             }
 
             return View();
@@ -97,7 +106,7 @@ namespace OrganizationX.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,PhoneNumber,Role,Token,TokenExpireDate,CreatedDate,TokenStatus, Department")] Authorization authorization)
+        public async Task<IActionResult> Create([Bind("Id,Email,PhoneNumber,CreatedBy,Role,Token,TokenExpireDate,CreatedDate,TokenStatus, Department")] Authorization authorization)
         {
 
 
