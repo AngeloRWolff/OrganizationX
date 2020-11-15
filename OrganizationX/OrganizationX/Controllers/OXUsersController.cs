@@ -156,13 +156,61 @@ namespace OrganizationX.Controllers
         {
             if (ModelState.IsValid)
             {
-                Console.WriteLine("Registering user success! Department : " + oXUser.Department);
+                try
+                {
+                    //Fetch authorized user account
+                    var user = _authcontext.Authorization.AsQueryable().Where(m => m.Email == oXUser.EmailAddress).First();
+                    //Check token expiration
+                    ErrorModel ERR_EXP = new ErrorModel
+                    {
+                        ErrorMessage = "The token for this account has expired",
+                        ErrorCode = 401,
+                        ReturnUrl = "OXUsers/Login",
+                        ReturnUrlName = "Contact Administrator"
+                    };
+                    if (user.TokenStatus == TokenStatus.Expired)
+                    {
+                        return View("Error", ERR_EXP);
+                    }
+                    if (user.TokenExpireDate < DateTime.Now)
+                    {
+                        return View("Error", ERR_EXP);
+                    }
+                    //Check token status
+                    ErrorModel ERR_CONSUMED = new ErrorModel
+                    {
+                        ErrorMessage = "The token for this account has already been used",
+                        ErrorCode = 401,
+                        ReturnUrl = "OXUsers/Login",
+                        ReturnUrlName = "Contact Administrator"
+                    };
+                    if (user.TokenStatus == TokenStatus.Consumed)
+                    {
+                        return View("Error", ERR_CONSUMED);
+                    }
 
-                var oooo = new IdentityUser { UserName = oXUser.Username, Email = oXUser.EmailAddress, EmailConfirmed=true };
-                var result = await _userManager.CreateAsync(oooo, oXUser.PasswordHash);
-                _context.Add(oXUser);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                    if (user.TokenStatus == TokenStatus.Pending)
+                    {
+                        //Create User Identity
+                        var oooo = new IdentityUser { UserName = oXUser.Username, Email = oXUser.EmailAddress, EmailConfirmed = true };
+                        var result = await _userManager.CreateAsync(oooo, oXUser.PasswordHash);
+                        //Insert OXUser data
+                        _context.Add(oXUser);
+                        await _context.SaveChangesAsync();
+                        //Update Token Status
+                        user.TokenStatus = TokenStatus.Consumed;
+                        _authcontext.Update(user);
+                        await _authcontext.SaveChangesAsync();
+                        Console.WriteLine("Registering user success! Department : " + oXUser.Department);
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+                catch
+                {
+                    //On Error
+                    return View(oXUser);
+                }
+
             }
             return View(oXUser);
         }

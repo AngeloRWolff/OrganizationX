@@ -1,7 +1,8 @@
-﻿
+﻿@model OrganizationX.Models.ErrorModel
 @{
     ViewData["Title"] = "Error";
 }
 
-<h1>Oops. Something went wrong</h1>
-
+    <h1>
+        @Model.ErrorMessage
+    </h1>
