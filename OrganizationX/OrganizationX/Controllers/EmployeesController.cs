@@ -175,7 +175,7 @@ namespace OrganizationX.Controllers
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
                 await _hist.SaveChangesAsync();
-                return View("Details", inc);
+                return View("Details", employee);
             }
             return View(employee);
         }
