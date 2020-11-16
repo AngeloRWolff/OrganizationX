@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label asp-for="Attrition" class="control-label"></label>
                 <select asp-for="Attrition" class="form-control">
-                    @foreach(var a in staticData.GetList("Attrition"))
+                    @foreach (var a in staticData.GetList("Attrition"))
                     {
                         <option value="@a">@a</option>
                     }
@@ -228,11 +228,14 @@
             </div>
         </form>
     </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+    <section style="height:200px;"></section>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

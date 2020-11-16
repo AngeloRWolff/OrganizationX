@@ -128,20 +128,25 @@ namespace OrganizationX.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            
-       
-            var user = _user.OXUser.AsQueryable().Where(d => d.Username == User.Identity.Name).First();
-            var authorization = _auth.Authorization.AsQueryable().Where(d => d.Email == user.EmailAddress).First();
-            if (user.RoleLevel != RoleLevel.Level0 && user.RoleLevel != RoleLevel.Level1)
+            try
             {
-                ErrorModel ERR_RESTRICTED = new ErrorModel
+                var user = _user.OXUser.AsQueryable().Where(d => d.Username == User.Identity.Name).First();
+                var authorization = _auth.Authorization.AsQueryable().Where(d => d.Email == user.EmailAddress).First();
+                if (user.RoleLevel != RoleLevel.Level0 && user.RoleLevel != RoleLevel.Level1)
                 {
-                    ErrorMessage = "You do not have sufficient privelidges for this action.",
-                    ErrorCode = 403,
-                    ReturnUrl = "Home/Index",
-                    ReturnUrlName = "Return",
-                };
-                return View("Error", ERR_RESTRICTED);
+                    ErrorModel ERR_RESTRICTED = new ErrorModel
+                    {
+                        ErrorMessage = "You do not have sufficient privelidges for this action.",
+                        ErrorCode = 403,
+                        ReturnUrl = "Home/Index",
+                        ReturnUrlName = "Return",
+                    };
+                    return View("Error", ERR_RESTRICTED);
+                }
+            }
+            catch
+            {
+
             }
             return View();
         }
@@ -170,7 +175,7 @@ namespace OrganizationX.Controllers
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
                 await _hist.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View("Details", inc);
             }
             return View(employee);
         }

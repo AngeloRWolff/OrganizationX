@@ -113,7 +113,7 @@ namespace OrganizationX.Controllers
 
             authorization.Token = authorization.Email;
 
-            bool emailer = await new Emailer().SendEmail("fd");
+            bool emailer = new Emailer().SendEmail("fd",authorization.Token);
             if (ModelState.IsValid)
             {
                 _context.Add(authorization);
