@@ -114,5 +114,15 @@ namespace OrganizationX.Models
         [Required]
         public uint YearsWithCurrManager { get; set; }
 
+
+
     }
+
+    public class EmployeeTrace
+    {
+        public Employee employee { get; set; }
+        public EmployeeHistory history { get; set; }
+    }
+
+   
 }

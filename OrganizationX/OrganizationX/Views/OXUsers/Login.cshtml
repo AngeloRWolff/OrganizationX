@@ -16,16 +16,20 @@
                     <div>
                         <label asp-for="Username" class="control-label"></label>
                         <input asp-for="Username" class="form-control" />
-                        <span asp-validation-for="Username" class="text-danger"></span>
+                        <span asp-validation-for="Username" class="tiny-danger"></span>
                     </div>
                     <div>
                         <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <input type="password" asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="tiny-danger "></span>
                     </div>
                 </div>
                 <section style="height:20px"></section>
                 <input class="login-button" value="Login" type="submit" />
+                @if (Model != null)
+                {
+                <h6>@Model.Err</h6>
+                }
             </form>
         </div>
 

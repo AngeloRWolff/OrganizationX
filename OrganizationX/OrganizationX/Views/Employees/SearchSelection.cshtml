@@ -6,15 +6,11 @@
     var ParentSearchOption = new SearchParameters().GetType().GetProperties();
     var ChildSearchProperty = new Option().GetType().GetProperties();
     var MinMaxProperty = new IntegerRange().GetType().GetProperties();
-
     var g = new StaticEmployeeSourceList();
-
-
     char index = 'z';
 }
 
 
-@Model.Department.ExactString[0]
 <div class="text-center">
     <div id="searchSelection" class="search-right-pane">
         @foreach (var key in keys)
@@ -71,15 +67,12 @@
 
 
             <div class="inline-block text-center max-width" style="margin-top:15px;" id='@k.Name`option`'>
-
-
                 @foreach (var i in ChildSearchProperty)
                 {
                     switch (i.Name)
                     {
                         case "ExactString":
                             {
-
                                 <div style="display:none" group="ExactString" id='@k.Name`ExactString`'>
                                     @{
                                         List<String> list = g.GetList(k.Name);
@@ -93,7 +86,6 @@
                                                     <input checked name="@name" value="@Model.Department.ExactString[0]" type="checkbox" id="@id">
                                                 }
                                                 else
-
                                                 {
 
                                                     @foreach (string item in list)
@@ -105,7 +97,6 @@
                                                     }
                                                 }
                                             </div>
-
                                         }
                                         <div>Custom</div>
                                         <input class="input-light width-med round-15" type="text" data-val="true" data-val-required="The Exact field is required." id="Age_Exact" name="@name" value="" />

@@ -124,20 +124,21 @@ namespace OrganizationX.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel _login)
         {
-            IQueryable<OXUser> oXUser = _context.OXUser.Where(uName => uName.Username == _login.Username);
-            if (oXUser.First().PasswordHash == _login.Password)
+                if (_login.Username == null || _login.Password == null)
             {
-                
-                Console.WriteLine(": login failed successfully ");
-
+                _login.Err = "Incorrect credentials";
+                return View("Login", _login);
+            }
                 var result = await _signInManager.PasswordSignInAsync(_login.Username, _login.Password, false, lockoutOnFailure: false);
                 Console.WriteLine(result.ToString());
-                Console.WriteLine(_signInManager.IsSignedIn(User));
-            }
-            else
+                if (!result.Succeeded)
             {
-                Console.WriteLine("Login failed");
+                _login.Err = "Login failed!";
+                return View("Login", _login);
             }
+                Console.WriteLine(_signInManager.IsSignedIn(User));
+            
+          
             return LocalRedirect("~/Home/Index");
         }
 

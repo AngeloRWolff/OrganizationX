@@ -21,12 +21,14 @@ namespace OrganizationX.Controllers
         private readonly EmployeeContext _context;
         private readonly OXUserContext _user;
         private readonly AuthorizationContext _auth;
+        private readonly EmployeeHistoryContext _hist;
 
-        public EmployeesController(EmployeeContext context, OXUserContext user, AuthorizationContext auth)
+        public EmployeesController(EmployeeContext context, OXUserContext user, AuthorizationContext auth, EmployeeHistoryContext hist)
         {
             _user = user;
             _context = context;
             _auth = auth;
+            _hist = hist;
         }
 
         // GET: Employees
@@ -64,12 +66,22 @@ namespace OrganizationX.Controllers
                 TotalRecords = mutatedSeed.Size,
                 Keys = mutatedSeed.getKeys()
             };
-
+            
             foreach (Employee employee in seedDataProperties.EmployeeQueue)
             {
                 _context.Add(employee);
+
+                EmployeeHistory employeeHistory = new EmployeeHistory
+                {
+                    Author = "System",
+                    ModifiedDate = DateTime.Now,
+                    TargetId = (int)employee.EmployeeNumber,
+                 };
+                _hist.Add(employeeHistory);
+
             }
             await _context.SaveChangesAsync();
+            await _hist.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
@@ -113,6 +125,7 @@ namespace OrganizationX.Controllers
         }
 
         // GET: Employees/Create
+        [Authorize]
         public IActionResult Create()
         {
             var user = _user.OXUser.AsQueryable().Where(d => d.Username == User.Identity.Name).First();
@@ -286,9 +299,19 @@ namespace OrganizationX.Controllers
                 }
             }
             Console.WriteLine(LDQO.GetQuery());
+            List<EmployeeTrace> employeeTrace = new List<EmployeeTrace>();
             IQueryable<Employee> employeeContext = _context.Employee.Where(LDQO.GetQuery());
 
-            return View("Index", employeeContext.ToList());
+            foreach (Employee e in employeeContext)
+            {
+                EmployeeHistory ehist = _hist.EmployeeHistory.First(m=>m.TargetId == (int)e.EmployeeNumber);
+                employeeTrace.Add(new EmployeeTrace
+                {
+                    employee = e,
+                    history = ehist
+                });
+            }
+            return View("SearchResults", employeeTrace);
             //return View("SearchResults", employeeContext.ToList());
             // return RedirectToAction(nameof(SearchSelection));
             // Console.WriteLine(LDQO.query);

@@ -7,14 +7,12 @@ using OrganizationX.Models;
 
 namespace OrganizationX.Data
 {
-    public class OXUserContext : DbContext
+    public class EmployeeHistoryContext : DbContext
     {
-        public OXUserContext (DbContextOptions<OXUserContext> options)
+        public EmployeeHistoryContext (DbContextOptions<EmployeeHistoryContext> options)
             : base(options)
         {
         }
-
-        public DbSet<OrganizationX.Models.OXUser> OXUser { get; set; }
 
         public DbSet<OrganizationX.Models.EmployeeHistory> EmployeeHistory { get; set; }
     }

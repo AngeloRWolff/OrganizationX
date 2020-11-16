@@ -46,6 +46,9 @@ namespace OrganizationX
             services.AddDbContext<OXUserContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("OXUserContext")));
 
+            services.AddDbContext<EmployeeHistoryContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("EmployeeHistoryContext")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

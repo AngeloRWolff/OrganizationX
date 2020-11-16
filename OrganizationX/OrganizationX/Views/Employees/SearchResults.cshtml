@@ -1,35 +1,51 @@
-﻿@model IEnumerable<OrganizationX.Models.Employee>
+﻿@model IEnumerable<OrganizationX.Models.EmployeeTrace>
 @{
     ViewData["Title"] = "SearchResults";
 }
 
-    <div class="view-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="table-header">Employee Number</th>
-                    <th class="table-header">Last Updated</th>
-                    <th class="table-header">Updated By</th>
-                    <th class="table-header">Edit</th>
-                    <th class="table-header">View</th>
-                    <th class="table-header">Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
+        <div class="text-center fill">
+            <table  style="overflow:auto" class="table table-center">
+                <thead>
+                    <tr>
+                        <th class="table-header">Employee Number</th>
+                        <th class="table-header">Job Role</th>
+                        <th class="table-header">Last Updated</th>
+                        <th class="table-header">Updated By</th>
+                        <th class="table-header">Edit</th>
+                        <th class="table-header">View</th>
+                        <th class="table-header">Delete</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
                     @foreach (var val in Model)
                     {
-                    <td>@Html.ValueFor(id => val.EmployeeNumber)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                        <tr>
+
+                            <td>@val.employee.EmployeeNumber</td>
+                            <td>@val.employee.JobRole</td>
+                            <td>@val.history.ModifiedDate</td>
+                            <td>@val.history.Author</td>
+
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@val.employee.EmployeeNumber">Edit</a>
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@val.employee.EmployeeNumber">Details</a>
+                            </td>
+                            <td>
+                                <a asp-action="Delete" asp-route-id="@val.employee.EmployeeNumber">Delete</a>
+                            </td>
+
+                        </tr>
                     }
-                </tr>
-            </tbody>
-            
-        </table>               
-    </div>
+
+                </tbody>
+
+            </table>
+
+
+        </div>
 
 
