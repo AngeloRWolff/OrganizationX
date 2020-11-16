@@ -128,6 +128,8 @@ namespace OrganizationX.Controllers
         [Authorize]
         public IActionResult Create()
         {
+            
+       
             var user = _user.OXUser.AsQueryable().Where(d => d.Username == User.Identity.Name).First();
             var authorization = _auth.Authorization.AsQueryable().Where(d => d.Email == user.EmailAddress).First();
             if (user.RoleLevel != RoleLevel.Level0 && user.RoleLevel != RoleLevel.Level1)
@@ -152,11 +154,22 @@ namespace OrganizationX.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Age,Attrition,BusinessTravel,DailyRate,Department,DistanceFromHome,Education,EducationField,EmployeeCount,EmployeeNumber,EnvironmentSatisfaction,Gender,HourlyRate,JobInvolvement,JobLevel,JobRole,JobSatisfaction,MaritalStatus,MonthlyIncome,MonthlyRate,NumCompaniesWorked,Over18,OverTime,PercentSalaryHike,PerformanceRating,RelationshipSatisfaction,StandardHours,StockOptionLevel,TotalWorkingYears,TrainingTimesLastYear,WorkLifeBalance,YearsAtCompany,YearsInCurrentRole,YearsSinceLastPromotion,YearsWithCurrManager")] Employee employee)
         {
-           
+            
             if (ModelState.IsValid)
             {
+                var inc = _context.Employee.Max(m => m.EmployeeNumber) + 1;
+                employee.EmployeeNumber = inc;
+                EmployeeHistory employeeHistory = new EmployeeHistory
+                {
+                    Author = User.Identity.Name,
+                    ModifiedDate = DateTime.Now,
+                    TargetId = (int)inc
+                };
+
+                _hist.Add(employeeHistory);
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
+                await _hist.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(employee);
@@ -196,8 +209,13 @@ namespace OrganizationX.Controllers
             {
                 try
                 {
+                    EmployeeHistory ehist = _hist.EmployeeHistory.First(m => m.TargetId == (int)id);
+                    ehist.Author = User.Identity.Name;
+                    ehist.ModifiedDate = DateTime.Now;
+                    _hist.Update(ehist);
                     _context.Update(employee);
                     await _context.SaveChangesAsync();
+                    await _hist.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -210,7 +228,7 @@ namespace OrganizationX.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(SearchSelection));
             }
             return View(employee);
         }

@@ -10,8 +10,8 @@ using OrganizationX.Data;
 namespace OrganizationX.Migrations
 {
     [DbContext(typeof(AuthorizationContext))]
-    [Migration("20201115072235_authmig3")]
-    partial class authmig3
+    [Migration("20201116161004_authmig1")]
+    partial class authmig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -111,6 +112,8 @@ namespace OrganizationX.Controllers
 
 
             authorization.Token = authorization.Email;
+
+            bool emailer = await new Emailer().SendEmail("fd");
             if (ModelState.IsValid)
             {
                 _context.Add(authorization);

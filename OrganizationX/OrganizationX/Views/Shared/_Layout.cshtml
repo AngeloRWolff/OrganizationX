@@ -39,21 +39,17 @@
     <header class="side-nav">
         <nav>
             <div>
-                <a asp-area="" asp-controller="Home" asp-action="Index">OrganizationX</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <div class="logo-header text-center">
+                    <img class="logo-large" src="~/OXLOGO.png" />
+                    
+                </div>
+                
                 <div>
 
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-button">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-button">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-
+                        </li>                      
                         <li class="nav-button">
                             <a class="nav-link text-light" asp-area="" asp-controller="Employees" asp-action="SearchSelection">Search</a>
                         </li>
@@ -61,7 +57,7 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Employees" asp-action="Analytics">Analytics</a>
                         </li>
                         <li class="nav-button">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Employees" asp-action="Create">Create</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Employees" asp-action="Create">Add Data</a>
                         </li>
                     </ul>
                 </div>

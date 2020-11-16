@@ -95,23 +95,7 @@ namespace OrganizationX.Controllers
 
 
             // GET: ValidateToken
-            public IActionResult ValidateToken2(string token)
-        {
-            Console.WriteLine("Token: " + token);
-            IQueryable<Authorization> oXUsers = _authcontext.Authorization;
-            oXUsers.Where(vt => vt.Token == token);
-            if (oXUsers.First() == null)
-            {
-                return RedirectToAction(nameof(Error));
-            }
-            else
-            {
-                //var oooo = new OXUser { Username = user.Username, EmailAddress = user.EmailAddress };
-               // var result = await _userManager.CreateAsync(oooo, oXUser.PasswordHash);
-                Console.WriteLine("Registered User");
-            }
-            return View();
-        }
+       
 
 
       
@@ -126,7 +110,7 @@ namespace OrganizationX.Controllers
         {
                 if (_login.Username == null || _login.Password == null)
             {
-                _login.Err = "Incorrect credentials";
+                _login.Err = "Login failed!";
                 return View("Login", _login);
             }
                 var result = await _signInManager.PasswordSignInAsync(_login.Username, _login.Password, false, lockoutOnFailure: false);
