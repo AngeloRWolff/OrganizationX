@@ -1,26 +1,68 @@
 ﻿
+@model OrganizationX.Models.Analytics
 @{
     ViewData["Title"] = "Analytics";
+    var keys = new Analytics().GetType().GetProperties();
 }
 
     <div class="text-center">
-        <h3>Analytics</h3>
-        <button class="btn btn-primary">Download Report</button>
-        <hr />
-        <h3>Employee Analytics</h3>
-        <hr />
-        <h3>User Analytics</h3>
-        <div>
-            <div>Total System Administrators:</div>
-            <div>Total Data Managers:</div>
-            <div>Total Data Maintaners:</div>
-            <div>Total Researchers:</div> 
-        
-            
-        
+        <div class="inline-block max-width">
+            <h3 class="inline-block">Employee Analytics</h3>
+            <button class="btn btn-primary inline-block">Download Full Report</button>
         </div>
         <hr />
+        <h4>Select Attribute To Analyze</h4>
+
+        @foreach (var k in keys)
+        {
+            <button class="btn btn-outline-primary">
+                @k.Name
+            </button>
+        }
+        <hr />
+        <h3>Insights on Age</h3>
+        @if (Model != null)
+        {
+            <div>@Model.Age.NumericInsight.Max</div>
+            <div>@Model.Age.NumericInsight.Min</div>
+            <div>@Model.Age.NumericInsight.Total</div>
+
+            @foreach (var k in Model.Age.NumericInsight.Distribution)
+            {
+               
+            }
+        }
+    <div class="max-width" style="z-index:-100;">
+        <div id="chartContainer" style="height: 370px; width: 100%; z-index:-100;"></div>
+    </div>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 
 
     </div>
+@section scripts
+{
+    <script>
+    window.onload = function () {
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	animationEnabled: true,
+    zoomEnabled: true,
+    backgroundColor: "rgba(0,0,0,0)",
+	title: {
+		
+        },
+    axisY:{
+        gridThickness: 0
+      },
+	data: [{
+		type: "line",
+		dataPoints: @Html.Raw(ViewBag.DataPoints)
+	}]
+    });
+    
+    chart.render();
+}
+    </script>
+}

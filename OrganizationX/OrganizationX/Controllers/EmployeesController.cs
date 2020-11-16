@@ -10,9 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 using OrganizationX.Data;
 using OrganizationX.Helpers;
 using OrganizationX.Models;
+
+
 
 namespace OrganizationX.Controllers
 {
@@ -151,6 +154,87 @@ namespace OrganizationX.Controllers
             return View();
         }
 
+       
+
+
+        [HttpGet]
+        public IActionResult Analytics()
+        {
+            Analytics analytics = new Analytics
+            {
+                Age = new Insight
+                {
+                    NumericInsight = new NumericInsight
+                    {
+                        Count = 0,
+                        Distribution= new Dictionary<int, int>(),
+                        Max = 0,
+                        Min = 0,
+                        Total = 0,
+                    }
+                }
+            };
+            
+            var employees = _context.Employee.AsQueryable();
+
+            try
+            {
+               
+                
+                List<DataPoint> dataPoints = new List<DataPoint>();
+                foreach (var e in employees)
+                {
+                  
+                        
+                    //Age
+                    analytics.Age.NumericInsight.Total += (int)e.Age;
+                    analytics.Age.NumericInsight.Count++;
+                    if (analytics.Age.NumericInsight.Distribution.ContainsKey((int)e.Age))
+                    {
+                        //Key exists increment value
+                        analytics.Age.NumericInsight.Distribution[(int)e.Age] += 1;
+                    }else
+                    {
+                        analytics.Age.NumericInsight.Distribution.Add((int)e.Age, 1);
+                    }
+                
+                    if ((int)e.Age > analytics.Age.NumericInsight.Max)
+                        analytics.Age.NumericInsight.Max = (int)e.Age;
+                    if ((int)e.Age < analytics.Age.NumericInsight.Min)
+                        analytics.Age.NumericInsight.Min = (int)e.Age;
+                   
+
+                   
+                }
+         
+                
+                int index = 0;
+                foreach (KeyValuePair<int, int> data in analytics.Age.NumericInsight.Distribution.OrderBy(key => key.Key))
+                {
+                    dataPoints.Add(new DataPoint(data.Key,data.Value));
+                    index++;
+                }
+                //  double count = 1000, y = 100;
+                //  Random random = new Random();
+
+
+                //   for (int i = 0; i < count; i++)
+                //  {
+                //     y += random.Next(-10, 11);
+                //    dataPoints.Add(new DataPoint(i, y));
+                // }
+                //dataPoints.Sort();
+                
+                ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+            }
+            catch
+            {
+
+            }
+           // analytics.Age.NumericInsight.Distribution.Sort();
+
+            return View(analytics);
+        }
         // POST: Employees/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -350,7 +434,7 @@ namespace OrganizationX.Controllers
         }
 
         // GET: Analytics
-        public IActionResult Analytics()
+        public IActionResult f()
         {
             List<PieChartData> chartData = new List<PieChartData>
             {
