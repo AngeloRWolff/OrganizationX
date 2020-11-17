@@ -704,7 +704,7 @@ namespace OrganizationX.Controllers
             var employee = await _context.Employee.FindAsync(id);
             _context.Employee.Remove(employee);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(SearchSelection));
         }
 
         private bool EmployeeExists(uint id)
