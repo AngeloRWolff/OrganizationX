@@ -9,8 +9,8 @@ using OrganizationX.Data;
 namespace OrganizationX.Migrations.Employee
 {
     [DbContext(typeof(EmployeeContext))]
-    [Migration("20201115065441_EmpMig2")]
-    partial class EmpMig2
+    [Migration("20201117132019_EmployeeContextMigration")]
+    partial class EmployeeContextMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

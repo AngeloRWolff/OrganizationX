@@ -69,7 +69,7 @@ namespace OrganizationX.Controllers
                 TotalRecords = mutatedSeed.Size,
                 Keys = mutatedSeed.getKeys()
             };
-            
+
             foreach (Employee employee in seedDataProperties.EmployeeQueue)
             {
                 _context.Add(employee);
@@ -79,7 +79,7 @@ namespace OrganizationX.Controllers
                     Author = "System",
                     ModifiedDate = DateTime.Now,
                     TargetId = (int)employee.EmployeeNumber,
-                 };
+                };
                 _hist.Add(employeeHistory);
 
             }
@@ -154,8 +154,214 @@ namespace OrganizationX.Controllers
             return View();
         }
 
-       
+        [HttpPost]
+        public IActionResult Analytics(string Target)
+        {
 
+            Analytics analytics = new AnalyticsInitializer().Get();
+
+
+            /*
+            Analytics analytics = new Analytics();
+            foreach(PropertyInfo propertyInfo1 in analytics.GetType().GetProperties())
+            {
+                Insight insight = (Insight)propertyInfo1.GetValue(analytics);
+                foreach(PropertyInfo insight1 in insight.GetType().GetProperties())
+                {
+                    NumericInsight numeric = new NumericInsight
+                    {
+                        Max = 0,
+                        Min = 0,
+                        Distribution = new Dictionary<int, int>(),
+                        Total = 0,
+                    };
+                    if (insight1.Name == "NumericInsight")
+                    {
+                        NumericInsight numericInsight = (NumericInsight)insight1.GetValue(propertyInfo1);
+                        numericInsight = numeric;
+                    }
+                }
+            }
+            */
+
+            var employees = _context.Employee.AsQueryable();
+
+
+
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            List<DataPoint> dataPointsString = new List<DataPoint>();
+            string TargetCrumb = String.Empty;
+            InsightType insightCrumb = InsightType.Unset;
+            foreach (var e in employees)
+            {
+
+                foreach (PropertyInfo a in analytics.GetType().GetProperties())
+                {
+                    //Match insight target
+                    if (a.Name == Target)
+                    {
+                        //Get employee prop type with reflection
+                        foreach (PropertyInfo p in new Employee().GetType().GetProperties())
+                        {
+                            if (p.Name == a.Name)
+                            {
+                                //Get Data Type
+                                switch (p.PropertyType.Name)
+                                {
+                                    case "String":
+                                        {
+                                            string ValueCrumb = string.Empty;
+                                            foreach (PropertyInfo propertyInfo in e.GetType().GetProperties())
+                                            {
+                                                //Check employee model to target match
+
+                                                if (propertyInfo.Name == Target)
+                                                {
+                                                    ValueCrumb = propertyInfo.GetValue(e).ToString();
+
+                                                    Console.WriteLine(propertyInfo.Name);
+                                                    // Console.WriteLine("Value" + g);
+
+                                                }
+                                            }
+                                            Insight insight = (Insight)a.GetValue(analytics); //Modify existing insight
+                                            if (insight.InsightType == InsightType.Unset)
+                                            {
+                                                insight.InsightType = InsightType.AlphaInsight;
+                                            }
+
+                                            if (insight.AlphaInsight.AlphaPairs.ContainsKey(ValueCrumb))
+                                            {
+                                                //Key exists increment value
+                                                insight.AlphaInsight.AlphaPairs[ValueCrumb] += 1;
+                                            }
+                                            else
+                                            {
+                                                insight.AlphaInsight.AlphaPairs.Add(ValueCrumb, 1);
+                                            }
+
+
+
+                                        }
+                                        break;
+                                    case "UInt32":
+                                        {
+
+                                            int ValueCrumb = 0;
+                                            foreach (PropertyInfo propertyInfo in e.GetType().GetProperties())
+                                            {
+                                                //Check employee model to target match
+
+                                                if (propertyInfo.Name == Target)
+                                                {
+                                                    ValueCrumb = Convert.ToInt32(propertyInfo.GetValue(e));
+
+                                                    Console.WriteLine(propertyInfo.Name);
+                                                    // Console.WriteLine("Value" + g);
+
+                                                }
+                                            }
+                                            Insight insight = (Insight)a.GetValue(analytics); //Modify existing insight
+                                            if (insight.InsightType == InsightType.Unset)
+                                            {
+                                                insight.InsightType = InsightType.NumericInsight;
+                                            }
+                                            insight.NumericInsight.Total += ValueCrumb;
+                                            insight.NumericInsight.Count++;
+                                            if (insight.NumericInsight.Distribution.ContainsKey(ValueCrumb))
+                                            {
+                                                //Key exists increment value
+                                                insight.NumericInsight.Distribution[ValueCrumb] += 1;
+                                            }
+                                            else
+                                            {
+                                                insight.NumericInsight.Distribution.Add(ValueCrumb, 1);
+                                            }
+
+                                            if (ValueCrumb > insight.NumericInsight.Max)
+                                                insight.NumericInsight.Max = ValueCrumb;
+                                            if (ValueCrumb < insight.NumericInsight.Min)
+                                                insight.NumericInsight.Min = ValueCrumb;
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                /*
+                //Age
+                analytics.Age.NumericInsight.Total += (int)e.Age;
+                analytics.Age.NumericInsight.Count++;
+                if (analytics.Age.NumericInsight.Distribution.ContainsKey((int)e.Age))
+                {
+                    //Key exists increment value
+                    analytics.Age.NumericInsight.Distribution[(int)e.Age] += 1;
+                }
+                else
+                {
+                    analytics.Age.NumericInsight.Distribution.Add((int)e.Age, 1);
+                }
+
+                if ((int)e.Age > analytics.Age.NumericInsight.Max)
+                    analytics.Age.NumericInsight.Max = (int)e.Age;
+                if ((int)e.Age < analytics.Age.NumericInsight.Min)
+                    analytics.Age.NumericInsight.Min = (int)e.Age;
+
+                */
+
+            }
+
+
+            // int index = 0;
+            foreach (PropertyInfo propertyInfo in analytics.GetType().GetProperties())
+            {
+                if (propertyInfo.Name == Target)
+                {
+                    Insight insight = (Insight)propertyInfo.GetValue(analytics);
+                    if (insight.InsightType == InsightType.NumericInsight)
+                    {
+                        foreach (KeyValuePair<int, int> data in insight.NumericInsight.Distribution.OrderBy(key => key.Key))
+                        {
+                            Console.WriteLine(data.Value);
+                            dataPoints.Add(new DataPoint(data.Key, data.Value));
+                        }
+                    }
+                    if (insight.InsightType == InsightType.AlphaInsight)
+                    {
+                        foreach (KeyValuePair<string, int> data in insight.AlphaInsight.AlphaPairs.OrderBy(key => key.Key))
+                        {
+                            Console.WriteLine(data.Key + ": " + data.Value);
+                            dataPointsString.Add(new DataPoint(data.Key, data.Value));
+                        }
+                    }
+                }
+            }
+            // foreach (KeyValuePair<int, int> data in analytics.Age.NumericInsight.Distribution.OrderBy(key => key.Key))
+            //  {
+            //     Console.WriteLine(data.Value);
+            //     dataPoints.Add(new DataPoint(data.Key, data.Value));          
+            //  }
+            //  double count = 1000, y = 100;
+            //  Random random = new Random();
+
+
+            //   for (int i = 0; i < count; i++)
+            //  {
+            //     y += random.Next(-10, 11);
+            //    dataPoints.Add(new DataPoint(i, y));
+            // }
+            //dataPoints.Sort();
+
+            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+            ViewBag.DataPointsString = JsonConvert.SerializeObject(dataPointsString);
+            ViewBag.TargetName = Target;
+
+
+            return View();
+        }
 
         [HttpGet]
         public IActionResult Analytics()
@@ -167,25 +373,25 @@ namespace OrganizationX.Controllers
                     NumericInsight = new NumericInsight
                     {
                         Count = 0,
-                        Distribution= new Dictionary<int, int>(),
+                        Distribution = new Dictionary<int, int>(),
                         Max = 0,
                         Min = 0,
                         Total = 0,
                     }
                 }
             };
-            
+
             var employees = _context.Employee.AsQueryable();
 
             try
             {
-               
-                
+
+
                 List<DataPoint> dataPoints = new List<DataPoint>();
                 foreach (var e in employees)
                 {
-                  
-                        
+
+
                     //Age
                     analytics.Age.NumericInsight.Total += (int)e.Age;
                     analytics.Age.NumericInsight.Count++;
@@ -193,25 +399,26 @@ namespace OrganizationX.Controllers
                     {
                         //Key exists increment value
                         analytics.Age.NumericInsight.Distribution[(int)e.Age] += 1;
-                    }else
+                    }
+                    else
                     {
                         analytics.Age.NumericInsight.Distribution.Add((int)e.Age, 1);
                     }
-                
+
                     if ((int)e.Age > analytics.Age.NumericInsight.Max)
                         analytics.Age.NumericInsight.Max = (int)e.Age;
                     if ((int)e.Age < analytics.Age.NumericInsight.Min)
                         analytics.Age.NumericInsight.Min = (int)e.Age;
-                   
 
-                   
+
+
                 }
-         
-                
+
+
                 int index = 0;
                 foreach (KeyValuePair<int, int> data in analytics.Age.NumericInsight.Distribution.OrderBy(key => key.Key))
                 {
-                    dataPoints.Add(new DataPoint(data.Key,data.Value));
+                    dataPoints.Add(new DataPoint(data.Key, data.Value));
                     index++;
                 }
                 //  double count = 1000, y = 100;
@@ -224,14 +431,14 @@ namespace OrganizationX.Controllers
                 //    dataPoints.Add(new DataPoint(i, y));
                 // }
                 //dataPoints.Sort();
-                
-                ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+
+                //ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
             }
             catch
             {
 
             }
-           // analytics.Age.NumericInsight.Distribution.Sort();
+            // analytics.Age.NumericInsight.Distribution.Sort();
 
             return View(analytics);
         }
@@ -243,7 +450,7 @@ namespace OrganizationX.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Age,Attrition,BusinessTravel,DailyRate,Department,DistanceFromHome,Education,EducationField,EmployeeCount,EmployeeNumber,EnvironmentSatisfaction,Gender,HourlyRate,JobInvolvement,JobLevel,JobRole,JobSatisfaction,MaritalStatus,MonthlyIncome,MonthlyRate,NumCompaniesWorked,Over18,OverTime,PercentSalaryHike,PerformanceRating,RelationshipSatisfaction,StandardHours,StockOptionLevel,TotalWorkingYears,TrainingTimesLastYear,WorkLifeBalance,YearsAtCompany,YearsInCurrentRole,YearsSinceLastPromotion,YearsWithCurrManager")] Employee employee)
         {
-            
+
             if (ModelState.IsValid)
             {
                 var inc = _context.Employee.Max(m => m.EmployeeNumber) + 1;
@@ -354,7 +561,7 @@ namespace OrganizationX.Controllers
             //Query to get department 
 
             k[0] = employee.Department;
-            op.ExactString= k;
+            op.ExactString = k;
             sp.Department = op;
 
 
@@ -368,7 +575,7 @@ namespace OrganizationX.Controllers
             //Console.WriteLine(sp.Age.OptionType.ToString());
             // return RedirectToAction(nameof(SearchSelection));
 
-            
+
             Stopwatch bench = new Stopwatch();
             LinqDynamicQueryOptimizer LDQO = new LinqDynamicQueryOptimizer();
             bench.Start();
@@ -411,7 +618,7 @@ namespace OrganizationX.Controllers
 
             foreach (Employee e in employeeContext)
             {
-                EmployeeHistory ehist = _hist.EmployeeHistory.First(m=>m.TargetId == (int)e.EmployeeNumber);
+                EmployeeHistory ehist = _hist.EmployeeHistory.First(m => m.TargetId == (int)e.EmployeeNumber);
                 employeeTrace.Add(new EmployeeTrace
                 {
                     employee = e,
@@ -486,8 +693,8 @@ namespace OrganizationX.Controllers
 
             return RedirectToAction(nameof(SearchSelection));
         }
-        
-       
+
+
 
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]

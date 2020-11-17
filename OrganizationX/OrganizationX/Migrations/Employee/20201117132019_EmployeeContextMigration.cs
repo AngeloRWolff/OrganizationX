@@ -1,10 +1,8 @@
-﻿
-
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OrganizationX.Migrations.Employee
 {
-    public partial class EmpMig2 : Migration
+    public partial class EmployeeContextMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

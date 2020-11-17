@@ -16,6 +16,6 @@ namespace OrganizationX.Data
 
         public DbSet<OrganizationX.Models.OXUser> OXUser { get; set; }
 
-        public DbSet<OrganizationX.Models.EmployeeHistory> EmployeeHistory { get; set; }
+        
     }
 }

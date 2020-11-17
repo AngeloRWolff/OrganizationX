@@ -1,5 +1,4 @@
 ﻿
-@model OrganizationX.Models.Analytics
 @{
     ViewData["Title"] = "Analytics";
     var keys = new Analytics().GetType().GetProperties();
@@ -15,34 +14,26 @@
 
         @foreach (var k in keys)
         {
-            <button class="btn btn-outline-primary">
-                @k.Name
-            </button>
+            <form asp-action="Analytics" class="inline-block">
+                <input hidden value="@k.Name" name="Target" />
+                <input type="submit" value="@k.Name" class="btn btn-outline-primary" />
+            </form>
         }
         <hr />
-        <h3>Insights on Age</h3>
-        @if (Model != null)
-        {
-            <div>@Model.Age.NumericInsight.Max</div>
-            <div>@Model.Age.NumericInsight.Min</div>
-            <div>@Model.Age.NumericInsight.Total</div>
-
-            @foreach (var k in Model.Age.NumericInsight.Distribution)
-            {
-               
-            }
-        }
-    <div class="max-width" style="z-index:-100;">
+        <h3>Insights on @ViewBag.TargetName</h3>
         <div id="chartContainer" style="height: 370px; width: 100%; z-index:-100;"></div>
-    </div>
+        <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
-
-
     </div>
+
+
 @section scripts
 {
+
     <script>
+
+                // this.document.getElementById('chartContainer').style.visibility = "hidden";
     window.onload = function () {
 
     var chart = new CanvasJS.Chart("chartContainer", {
@@ -51,7 +42,7 @@
     zoomEnabled: true,
     backgroundColor: "rgba(0,0,0,0)",
 	title: {
-		
+
         },
     axisY:{
         gridThickness: 0
@@ -61,8 +52,35 @@
 		dataPoints: @Html.Raw(ViewBag.DataPoints)
 	}]
     });
-    
-    chart.render();
+        var g = @Html.Raw(ViewBag.DataPoints);
+        if (g.length > 0) {
+             this.document.getElementById('chartContainer').style.display = "block";
+            chart.render();
+        }
+        else {
+            this.document.getElementById('chartContainer').style.display = "none";
+        }
+
+        var chart2 = new CanvasJS.Chart("chartContainer2", {
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	exportEnabled: true,
+     animationEnabled: true,
+      backgroundColor: "rgba(0,0,0,0)",
+	title: {
+		text: "Automotive Semiconductor Vendors 2015",
+		fontSize: 21
+	},
+	data: [{
+		type: "pie",
+		startAngle: 160,
+		toolTipContent: "<b>{label}</b>: {y}%",
+		indexLabel: "{label} - {y}%",
+		dataPoints: @Html.Raw(ViewBag.DataPointsString)
+	}]
+        });
+        var g = @Html.Raw(ViewBag.DataPointsString);
+        if (g.length > 0)
+        chart2.render();
 }
     </script>
 }

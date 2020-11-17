@@ -74,13 +74,14 @@ namespace OrganizationX.Models
         public Insight YearsSinceLastPromotion { get; set; }
 
         public Insight YearsWithCurrManager { get; set; }
+
     }
 
     public class Insight
     {
         public NumericInsight NumericInsight { get; set; }
         public AlphaInsight AlphaInsight { get; set; }
-        public InsightType InsightType { get; set; }
+        public InsightType InsightType { get; set; } = InsightType.Unset;
       
 
     }
@@ -95,12 +96,21 @@ namespace OrganizationX.Models
     }
     public class AlphaInsight
     {
-        public string Name { get; set; }
-        public int Count { get; set; }
+        public string Name { get; set; } = "";
+        public List<int> Count { get; set; } 
+        public Dictionary<string,int> AlphaPairs { get; set; }
     }
     public enum InsightType
     {
+        Unset,
         NumericInsight,
         AlphaInsight
     }
+
+    public class AnalyticsViewObject
+    {
+        public string Target { get; set; }
+    }
+    
+     
 }

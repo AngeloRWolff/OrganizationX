@@ -22,8 +22,8 @@
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="Data\Static\" />
+    <Folder Include="Migrations\ApplicationDb\" />
     <Folder Include="Migrations\Auth\" />
-    <Folder Include="Migrations\OXUser\" />
   </ItemGroup>
 
 </Project>

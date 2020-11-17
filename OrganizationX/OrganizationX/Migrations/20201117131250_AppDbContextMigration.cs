@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace OrganizationX.Migrations.ApplicationDb
+namespace OrganizationX.Migrations
 {
-    public partial class dppmig : Migration
+    public partial class AppDbContextMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

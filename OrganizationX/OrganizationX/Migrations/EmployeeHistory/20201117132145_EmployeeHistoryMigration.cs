@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OrganizationX.Migrations.EmployeeHistory
 {
-    public partial class emphist : Migration
+    public partial class EmployeeHistoryMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
