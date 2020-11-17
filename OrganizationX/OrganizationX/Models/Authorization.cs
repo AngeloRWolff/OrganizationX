@@ -8,23 +8,28 @@ namespace OrganizationX.Models
 {
     public class Authorization
     {
-
+        
         public int Id { get; set; }
+        
 
         [EmailAddress]
+        [Required]
         public string Email { get; set; }
-
+        
         [Phone]
+        [Required]
         public string PhoneNumber { get; set; }
 
+        [Required]
         public RoleLevel Role { get; set; }
 
         public string CreatedBy { get; set; }
 
+        [Required]
         public string Department { get; set; }
 
         public string Token { get; set; }
-
+        
         public DateTime TokenExpireDate { get; set; }
 
         public DateTime CreatedDate { get; set; }

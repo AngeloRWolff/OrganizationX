@@ -76,7 +76,7 @@ namespace OrganizationX.Models
         public Insight YearsWithCurrManager { get; set; }
 
     }
-
+    
     public class Insight
     {
         public NumericInsight NumericInsight { get; set; }

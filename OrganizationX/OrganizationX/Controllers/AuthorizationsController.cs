@@ -111,18 +111,19 @@ namespace OrganizationX.Controllers
         {
 
 
-            authorization.Token = authorization.Email;
-
-            bool emailer = new Emailer().SendEmail("fd",authorization.Token);
+            authorization.Token = authorization.Email; 
+            
+            
             if (ModelState.IsValid)
             {
                 _context.Add(authorization);
                 await _context.SaveChangesAsync();
+                bool emailer = new Emailer().SendEmail(authorization.Email, authorization.Token);
                 return RedirectToAction(nameof(Index));
             }
             return View(authorization);
         }
-
+        
         // GET: Authorizations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

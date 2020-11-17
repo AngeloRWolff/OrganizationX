@@ -246,3 +246,4 @@ C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\EmployeeHistories\Details.cshtml.g.cs
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\EmployeeHistories\Edit.cshtml.g.cs
 C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\Razor\Views\EmployeeHistories\Index.cshtml.g.cs
+C:\OrganizationX\OrganizationX\OrganizationX\obj\Debug\netcoreapp3.1\OrganizationX.csprojAssemblyReference.cache

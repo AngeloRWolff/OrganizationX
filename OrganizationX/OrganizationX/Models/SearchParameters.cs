@@ -98,13 +98,13 @@ namespace OrganizationX.Models
         public int Min { get; set; } = -1;
         public int Max { get; set; } = -1;
     }
-
+    
     public class RelationCondition
     {
         public RelationType Relation { get; set; }
         public int Value { get; set; }
     }
-
+    
     
     public class RelationType
     {

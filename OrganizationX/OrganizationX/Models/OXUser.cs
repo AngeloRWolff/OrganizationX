@@ -13,7 +13,7 @@ namespace OrganizationX.Models
         public string PhoneNumber { get; set; }
         public string CreatedBy { get; set; }
         public string EmailAddress { get; set; }
-        public string PasswordHash { get; set; }
+        public string PasswordHash { get; set; } 
         public string Department { get; set; }
         public RoleLevel RoleLevel { get; set; }
         public Permissions Permissions { get; set; }
@@ -28,7 +28,7 @@ namespace OrganizationX.Models
 
         public string Err { get; set; } = String.Empty;
     }
-
+    
     public enum Permissions
     {
         Unrestricted,
